@@ -1,5 +1,9 @@
 <template>
     <div class="store-introduction container-fluid">
+        <Loading
+            v-if="isLoading"
+            :class="{ 'loading-fade': !isLoading }"
+        ></Loading>
         <div class="container pt-2">
             <div class="row">
                 <div class="col-12">
@@ -90,7 +94,9 @@ import EventAPI from '@/api/Event';
 import StoreAPI from '@/api/Store';
 import { selectStoreData } from '@/stores/selectStore';
 import EventPanel from '@/components/event/EventPanel.vue';
+import Loading from '@/components/common/Loading.vue';
 
+const isLoading = ref(true);
 const route = useRoute();
 
 const userId = ref(null);
@@ -111,9 +117,15 @@ const selectTheStore = selectStoreData();
 onMounted(() => {
     userId.value = route.params.userId;
 
-    StoreAPI.get(selectTheStore.selectStore._id).then((response) => {
-        storeViewObject.value = response.data.data;
-    });
+    StoreAPI.get(selectTheStore.selectStore._id)
+        .then((response) => {
+            storeViewObject.value = response.data.data;
+        })
+        .finally(() => {
+            setTimeout(() => {
+                isLoading.value = false;
+            }, 500);
+        });
 
     EventAPI.getStoreEvent(selectTheStore.selectStore._id).then((response) => {
         eventCards.value = response.data.data;
@@ -123,6 +135,6 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .store-introduction {
-    background: linear-gradient(180deg, #fff6cc 0%, #ffffff 100%);
+    background: linear-gradient(180deg, #fff6cc 0%, #ffffff 40%);
 }
 </style>
