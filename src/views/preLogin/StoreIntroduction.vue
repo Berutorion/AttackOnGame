@@ -63,70 +63,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="sub-title_wrap mb-3">
-                        <h2
-                            class="fs-6 text-primary fw-bold pb-2 border-bottom border-2 border-primary fz-6 d-inline-block sub-title mb-0"
-                        >
-                            店家評價
-                        </h2>
-                    </div>
-                    <div
-                        class="bg-warning bg-opacity-10 p-3 border-2 border border-warning"
-                    >
-                        <div class="text-center">
-                            <p class="fw-bold">
-                                <span class="fs-5">4.5</span>/5
-                            </p>
-                            <div
-                                class="position-relative"
-                                style="
-                                    width: 100px;
-                                    height: 20px;
-                                    margin: 0 auto;
-                                    position: relative;
-                                "
-                            >
-                                <div
-                                    class="position-absolute"
-                                    :style="{
-                                        backgroundImage: 'url(' + starImg + ')',
-                                    }"
-                                    alt=""
-                                    style="
-                                        position: absolute;
-                                        border: 0px solid red;
-                                        margin: 0;
-                                        padding: 0;
-                                        min-height: 20px;
-                                        height: 100%;
-                                        width: 100%;
-                                        display: block;
-                                        background-repeat: no-repeat;
-                                    "
-                                ></div>
-                                <div
-                                    class="position-relative"
-                                    :style="{
-                                        backgroundImage:
-                                            'url(' + starImgFill + ')',
-                                    }"
-                                    alt=""
-                                    style="
-                                        border: 0px solid blue;
-                                        margin: 0;
-                                        padding: 0;
-                                        min-height: 20px;
-                                        height: 100%;
-                                        display: block;
-                                        overflow: hidden;
-                                        background-repeat: no-repeat;
-                                    "
-                                ></div>
-                            </div>
-                        </div>
-                        <div></div>
-                    </div>
-
+                    <storeRatingList></storeRatingList>
                     <div class="store-introduction__content">
                         <div class="sub-title_wrap mb-3">
                             <h2
@@ -154,8 +91,7 @@ import StoreAPI from '@/api/Store';
 import { selectStoreData } from '@/stores/selectStore';
 import EventPanel from '@/components/event/EventPanel.vue';
 import Loading from '@/components/common/Loading.vue';
-import starImg from '@/assets/images/star.svg';
-import starImgFill from '@/assets/images/star_fill.svg';
+import storeRatingList from '@/components/store/storeRatingList.vue';
 
 const isLoading = ref(true);
 const route = useRoute();
@@ -195,24 +131,6 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.sub-title_wrap {
-    position: relative;
-
-    .sub-title {
-        position: relative;
-        z-index: 2;
-    }
-
-    &::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: 0px;
-        width: 100%;
-        border-bottom: 2px solid #d4d4d4;
-    }
-}
-
 .store-introduction {
     background: linear-gradient(180deg, #fff6cc 0%, #ffffff 40%);
 }
