@@ -48,7 +48,6 @@ defineProps({
         height: 100%;
         display: block;
         overflow: hidden;
-
         background-repeat: no-repeat;
     }
 }
