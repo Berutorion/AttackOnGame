@@ -84,7 +84,7 @@ const StoreAPI = {
     /**
      * getTheOrder
      * @description 取得後台活動詳細
-     * * @param {string} idNumber  活動 ID
+     * @param {string} idNumber  活動 ID
      */
     async getTheOrder(idNumber) {
         try {
@@ -102,6 +102,20 @@ const StoreAPI = {
     async getMyEvent() {
         try {
             const response = await Axios.get('/api/v1/myevent/list');
+            return response;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
+    /**
+     * getReview
+     * @param {string} storeId  活動 ID
+     * @description 取得店家評論
+     */
+    async getReview(storeId) {
+        try {
+            const response = await Axios.get(`/api/v1/review/${storeId}`);
             return response;
         } catch (error) {
             console.error(error);

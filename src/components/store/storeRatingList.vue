@@ -8,16 +8,21 @@
             </h2>
         </div>
         <div
+            v-if="reviewData === null"
             class="bg-warning bg-opacity-10 p-4 border-2 border border-warning mb-3"
         >
             <p class="text-center">尚未有人評價店家</p>
         </div>
         <div
+            v-if="reviewData !== null"
             class="bg-warning bg-opacity-10 p-4 border-2 border border-warning d-flex align-items-center gap-4 mb-3"
         >
             <div class="text-center">
-                <p class="fw-bold"><span class="fs-5">4.5</span>/5</p>
-                <star width="70%"></star>
+                <p class="fw-bold">
+                    <span class="fs-5">{{ reviewData[0].rate }}</span
+                    >/5
+                </p>
+                <star :width="calculatePercentage(reviewData[0].rate)"></star>
             </div>
             <div
                 class="btn-group gap-3"
@@ -89,8 +94,12 @@
                 >
             </div>
         </div>
-        <ul class="mb-3 p-0">
-            <li class="d-flex gap-3 p-3 border-bottom">
+        <ul v-if="reviewData !== null" class="mb-3 p-0">
+            <li
+                v-for="value in reviewData[0].content"
+                :key="value._id"
+                class="d-flex gap-3 p-3 border-bottom"
+            >
                 <div
                     style="width: 48px; height: 48px; overflow: hidden"
                     class="rounded-circle"
@@ -102,14 +111,17 @@
                     />
                 </div>
                 <div class="flex-grow-1">
-                    <p class="fw-bold text-primary fs-6 inter">BABY SHAR</p>
-                    <p>場地舒服～老闆人超好！！！！</p>
-                    <p class="text-grey9F fs-10">2024-03-22 11:00</p>
+                    <p class="fw-bold text-primary fs-6 inter">評價留言</p>
+                    <p>{{ value.content }}</p>
+                    <p class="text-grey9F fs-10">
+                        {{ formatDate(value.createTime) }}
+                    </p>
                 </div>
-                <star width="70%"></star>
+                <star :width="calculatePercentage(value.rate)"></star>
             </li>
         </ul>
         <Pagination
+            v-if="reviewData !== null"
             :current-page="currentPage"
             :total-pages="totalPages"
             @update:currentPage="handlePageChange"
@@ -121,17 +133,46 @@
 import { onMounted, ref, computed } from 'vue';
 import star from '@/components/common/starRating.vue';
 import Pagination from '@/components/common/Pagination.vue';
+import StoreAPI from '@/api/Store';
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
 const currentPage = ref(1);
 const totalPages = computed(() => {
-    return 3;
+    return 1;
     // return Math.ceil(rawEventData.value.length / PER_PAGE);
 });
 function handlePageChange(newPage) {
     currentPage.value = newPage;
 }
+function calculatePercentage(stars) {
+    return `${(stars / 5) * 100}%`;
+}
+function formatDate(isoDateString) {
+    const date = new Date(isoDateString);
 
-onMounted(() => {});
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+const reviewData = ref(null);
+const getReviewData = async (storeId) => {
+    await StoreAPI.getReview(storeId).then((res) => {
+        reviewData.value = res.data.data;
+        console.log(reviewData.value);
+    });
+};
+
+onMounted(() => {
+    const { userId } = route.params;
+    console.log('userId', userId);
+    getReviewData(userId);
+});
 </script>
 <style lang="scss" scoped>
 .sub-title_wrap {
