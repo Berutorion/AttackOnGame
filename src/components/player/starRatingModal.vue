@@ -13,11 +13,16 @@
                 </div>
                 <div class="modal-body">
                     <p class="text-grey9F">已參加的活動</p>
-                    <p class="fw-bold fs-4">{{ text }}</p>
+                    <p class="fw-bold fs-4">{{ modalData?.title }}</p>
                     <div class="lh-lg">
-                        <p>2024-01-02 14:00 ~ 2024-03-01 14:39</p>
-                        <p>訂單編號：2134555657575</p>
-                        <p>NT$ 200</p>
+                        <p class="fw-bold">活動日期：</p>
+                        <p>
+                            {{ modalData?.eventStartTime }} ~
+                            {{ modalData?.eventEndTime }}
+                        </p>
+                        <p class="fw-bold">訂單編號：</p>
+                        <p>{{ modalData?.idNumber }}</p>
+                        <p class="fw-bold">NT$ {{ modalData?.totalAmount }}</p>
                     </div>
 
                     <!-- 店家名稱 但ＡＰＩ沒給～～ -->
@@ -108,7 +113,7 @@ import Modal from 'bootstrap/js/dist/modal';
 
 defineProps({
     title: { type: String, default: '' },
-    text: { type: String, default: '' },
+    modalData: { type: Object, default: () => ({}) },
 });
 const modal = ref(null);
 const myModal = ref(null);
