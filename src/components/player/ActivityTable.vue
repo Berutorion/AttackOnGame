@@ -63,18 +63,32 @@ function handlePageChange(newPage) {
 </script>
 
 <template>
-    <div class="d-flex flex-column justify-content-between flex-grow-1 activity-page-table-wrap">
+    <div
+        class="d-flex flex-column justify-content-between flex-grow-1 activity-page-table-wrap"
+    >
         <!-- table -->
-        <starRatingModal ref="RatingModal" :modal-data="modalData" title="新增評論"></starRatingModal>
+        <starRatingModal
+            ref="RatingModal"
+            :modal-data="modalData"
+            title="新增評論"
+        ></starRatingModal>
         <table class="table align-middle table-hover mt-3">
             <thead>
                 <tr>
-                    <th v-for="(title, index) in tableTitles" :key="index" scope="col">
+                    <th
+                        v-for="(title, index) in tableTitles"
+                        :key="index"
+                        scope="col"
+                    >
                         <p class="">{{ title }}</p>
                     </th>
                 </tr>
             </thead>
-            <EmptyTable v-if="activityList.length === 0" :length="tableTitles.length" text="目前還沒有相關的訂單唷"></EmptyTable>
+            <EmptyTable
+                v-if="activityList.length === 0"
+                :length="tableTitles.length"
+                text="目前還沒有相關的訂單唷"
+            ></EmptyTable>
             <tbody v-for="(value, index) in paginatedList" v-else :key="index">
                 <tr>
                     <td class="w-40">
@@ -86,21 +100,25 @@ function handlePageChange(newPage) {
                             <div class="d-flex">
                                 <p>
                                     {{
-            formatTime(
-                value.eventStartTime,
-                value.eventEndTime
-            )
-        }}
+                                        formatTime(
+                                            value.eventStartTime,
+                                            value.eventEndTime
+                                        )
+                                    }}
                                 </p>
                             </div>
                         </div>
                     </td>
                     <td width="100">
                         <div class="d-flex flex-column">
-                            <button type="button"
+                            <button
+                                type="button"
                                 class="btn btn-outline-dark btn-sm mb-2 d-flex align-items-center justify-content-between"
-                                @click="goTicket(value.idNumber)">
-                                <span class="material-symbols-outlined qrcode-style">
+                                @click="goTicket(value.idNumber)"
+                            >
+                                <span
+                                    class="material-symbols-outlined qrcode-style"
+                                >
                                     qr_code
                                 </span>
                                 <p class="flex-grow-1">
@@ -108,8 +126,12 @@ function handlePageChange(newPage) {
                                 </p>
                             </button>
 
-                            <button v-if="value.status === '已使用'" type="button" class="btn btn-outline-dark btn-sm"
-                                @click="openRatingModal(value)">
+                            <button
+                                v-if="value.status === '已使用'"
+                                type="button"
+                                class="btn btn-outline-dark btn-sm"
+                                @click="openRatingModal(value)"
+                            >
                                 前往評價
                             </button>
                         </div>
@@ -122,7 +144,11 @@ function handlePageChange(newPage) {
             </tbody>
         </table>
         <nav v-if="activityList.length > 0">
-            <Pagination :current-page="currentPage" :total-pages="totalPages" @update:currentPage="handlePageChange" />
+            <Pagination
+                :current-page="currentPage"
+                :total-pages="totalPages"
+                @update:currentPage="handlePageChange"
+            />
         </nav>
     </div>
 </template>
