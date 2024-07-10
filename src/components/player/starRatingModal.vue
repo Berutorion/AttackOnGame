@@ -79,6 +79,7 @@
                     </div>
                     <textarea
                         id="comment"
+                        v-model="content"
                         name="comment"
                         placeholder="請輸入評論"
                         class="form-control"
@@ -110,14 +111,27 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import Modal from 'bootstrap/js/dist/modal';
+import PlayerAPI from '@/api/Player';
 
-defineProps({
+const props = defineProps({
     title: { type: String, default: '' },
     modalData: { type: Object, default: () => ({}) },
 });
 const modal = ref(null);
 const myModal = ref(null);
 const starRatingNum = ref(null);
+const content = ref('');
+const postReview = async () => {
+    const mydata = ref({
+        orderNumber: props.modalData.idNumber,
+        rate: starRatingNum.value,
+        content: content.value,
+    });
+    console.log(mydata.value);
+    await PlayerAPI.postReview(mydata.value).then((res) => {
+        console.log('GOOD POST res', res);
+    });
+};
 
 onMounted(() => {
     myModal.value = new Modal(modal.value);
@@ -128,6 +142,7 @@ const myModalShow = () => {
 };
 
 const myModalHide = () => {
+    postReview();
     myModal.value.hide();
 };
 
