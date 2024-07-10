@@ -106,12 +106,14 @@
                 >
                     <img
                         class="object-fit-cover w-100 h-100"
-                        src="https://images.unsplash.com/photo-1720010944710-01161d017608?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxNXx8fGVufDB8fHx8fA%3D%3D"
+                        :src="value.author.avatar"
                         alt=""
                     />
                 </div>
                 <div class="flex-grow-1">
-                    <p class="fw-bold text-primary fs-6 inter">評價留言</p>
+                    <p class="fw-bold text-primary fs-6 inter">
+                        {{ value.author.name }}
+                    </p>
                     <p>{{ value.content }}</p>
                     <p class="text-grey9F fs-10">
                         {{ formatDate(value.createTime) }}
