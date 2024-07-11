@@ -7,6 +7,12 @@
             ></Loading>
             <LeftEl></LeftEl>
             <div class="col-9 ps-3">
+                <rollBack
+                    :route-link="{
+                        name: 'StoreActivity',
+                        params: idNumber,
+                    }"
+                ></rollBack>
                 <div class="border rounded bg-white min-h-screen p-3">
                     <div
                         class="d-grid pb-2 pt-3 gap-2 text-grey9F border-bottom"
@@ -62,6 +68,7 @@ import toLocalString from '@/utilities/toLocalString';
 import { PaymentStatus, PaymentMethod } from '@/constant/orderStatus';
 import EmptyField from '@/components/common/EmptyField.vue';
 import Loading from '@/components/common/Loading.vue';
+import rollBack from '@/components/common/rollBack.vue';
 
 const users = ref([]);
 const router = useRouter();
