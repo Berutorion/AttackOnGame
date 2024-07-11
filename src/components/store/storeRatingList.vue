@@ -136,9 +136,8 @@ import { onMounted, ref, computed } from 'vue';
 import star from '@/components/common/starRating.vue';
 import Pagination from '@/components/common/Pagination.vue';
 import StoreAPI from '@/api/Store';
-import { useRoute } from 'vue-router';
+import { selectStoreData } from '@/stores/selectStore';
 
-const route = useRoute();
 const currentPage = ref(1);
 const totalPages = computed(() => {
     return 1;
@@ -163,6 +162,7 @@ function formatDate(isoDateString) {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 const reviewData = ref(null);
+const selectTheStore = selectStoreData();
 const getReviewData = async (storeId) => {
     await StoreAPI.getReview(storeId).then((res) => {
         reviewData.value = res.data.data;
@@ -171,9 +171,7 @@ const getReviewData = async (storeId) => {
 };
 
 onMounted(() => {
-    const { userId } = route.params;
-    console.log('userId', userId);
-    getReviewData(userId);
+    getReviewData(selectTheStore.selectStore._id);
 });
 </script>
 <style lang="scss" scoped>
