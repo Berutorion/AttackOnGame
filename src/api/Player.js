@@ -104,25 +104,9 @@ const PlayerAPI = {
      * @description 取得活動結帳頁的資料
      */
 
-    async postOrder({
-        eventId,
-        payment,
-        discount,
-        name,
-        phone,
-        registrationCount,
-        note,
-    }) {
+    async postOrder(data) {
         try {
-            const response = await Axios.post('/api/v1/order', {
-                eventId,
-                payment,
-                discount,
-                name,
-                phone,
-                registrationCount,
-                note,
-            });
+            const response = await Axios.post('/api/v1/order', data);
             return response.data;
         } catch (error) {
             console.error(error);

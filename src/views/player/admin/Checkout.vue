@@ -91,6 +91,24 @@
                             ></error-message>
                         </div>
                         <div class="mb-3 require-icon">
+                            <label for="InputEmail" class="form-label"
+                                >電子郵件</label
+                            >
+                            <v-field
+                                id="InputEmail"
+                                v-model="formData.email"
+                                type="text"
+                                class="form-control"
+                                rules="required|email"
+                                name="電子郵件"
+                                :class="{ 'is-invalid': errors['電子郵件'] }"
+                            ></v-field>
+                            <error-message
+                                name="電子郵件"
+                                class="text-danger"
+                            ></error-message>
+                        </div>
+                        <div class="mb-3 require-icon">
                             <label for="personNum" class="form-label"
                                 >報名人數
                                 <span class="text-grey66"
@@ -120,7 +138,7 @@
                             >
                             <textarea
                                 id="inputRemark"
-                                v-model="formData.note"
+                                v-model="formData.notes"
                                 type="text"
                                 class="form-control"
                                 placeholder="有什麼想跟主揪說的話嗎？歡迎留言唷"
@@ -242,7 +260,8 @@ const formData = ref({
     userName: '',
     phoneNum: '',
     personNum: 1,
-    note: '',
+    email: '',
+    notes: '',
     payPrice: null,
 });
 
@@ -295,7 +314,8 @@ const onSubmitSuccess = () => {
         name: formData.value.userName,
         phone: String(formData.value.phoneNum),
         registrationCount: Number(formData.value.personNum),
-        note: formData.value.note,
+        email: formData.value.email,
+        notes: formData.value.notes,
     };
     postOrder(postOrderObj);
 };
@@ -322,6 +342,7 @@ const useDefault = (data) => {
     console.log(data);
     formData.value.phoneNum = indexStore.playerData.phone;
     formData.value.userName = indexStore.playerData.name;
+    formData.value.email = indexStore.userData.email;
 };
 const handleCheckboxChange = () => {
     if (isDefaultChecked.value) {
@@ -329,6 +350,7 @@ const handleCheckboxChange = () => {
     } else {
         formData.value.phoneNum = '';
         formData.value.userName = '';
+        formData.value.email = '';
     }
 };
 
@@ -339,7 +361,7 @@ onMounted(() => {
     if (orderStore.isNew === false) {
         formData.value.phoneNum = orderStore.formData.phoneNum;
         formData.value.personNum = orderStore.formData.personNum;
-        formData.value.note = orderStore.formData.note;
+        formData.value.notes = orderStore.formData.notes;
         formData.value.userName = orderStore.formData.userName;
     }
 });
