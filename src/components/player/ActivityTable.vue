@@ -1,9 +1,19 @@
 <script setup>
-import dayjs from 'dayjs';
+import dayjs from '@/utilities/dayjs';
 import { defineProps, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import toLocalString from '@/utilities/toLocalString';
 import EmptyTable from '@/components/common/EmptyTable.vue';
+import Pagination from '@/components/common/Pagination.vue';
+import starRatingModal from '@/components/player/starRatingModal.vue';
+
+const modalData = ref(null);
+const RatingModal = ref(null);
+const openRatingModal = (data) => {
+    modalData.value = data;
+    console.log('modalData.value', modalData.value);
+    RatingModal.value.myModalShow();
+};
 
 const PaymentStatus = {
     pending: '尚未付款',
@@ -27,6 +37,7 @@ const totalPages = computed(() => {
 const paginatedList = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage;
     const end = start + itemsPerPage;
+    console.log('props.activityList', props.activityList);
     return props.activityList.slice(start, end);
 });
 const setStatus = (x) => {
@@ -36,7 +47,6 @@ const formatTime = (start, end) => {
     const Date = dayjs(start).format('YYYY-MM-DD');
     const startTime = dayjs(start).format('HH:mm');
     const endTime = dayjs(end).format('HH:mm');
-
     return `${Date} ${startTime} ~ ${endTime}`;
 };
 
@@ -47,6 +57,9 @@ const goTicket = (idNumber) => {
         params: { idNumber },
     });
 };
+function handlePageChange(newPage) {
+    currentPage.value = newPage;
+}
 </script>
 
 <template>
@@ -54,6 +67,11 @@ const goTicket = (idNumber) => {
         class="d-flex flex-column justify-content-between flex-grow-1 activity-page-table-wrap"
     >
         <!-- table -->
+        <starRatingModal
+            ref="RatingModal"
+            :modal-data="modalData"
+            title="新增評論"
+        ></starRatingModal>
         <table class="table align-middle table-hover mt-3">
             <thead>
                 <tr>
@@ -107,13 +125,25 @@ const goTicket = (idNumber) => {
                                     前往 <span class="d-block">票券 </span>
                                 </p>
                             </button>
-                            <button
-                                v-if="value.status === '已使用'"
-                                type="button"
-                                class="btn btn-outline-dark btn-sm"
-                            >
-                                前往評價
-                            </button>
+
+                            <div v-if="value.status === '已使用'">
+                                <button
+                                    v-if="value.isCommented"
+                                    type="button"
+                                    class="btn btn-outline-dark btn-sm"
+                                    disabled
+                                >
+                                    已評價
+                                </button>
+                                <button
+                                    v-else
+                                    type="button"
+                                    class="btn btn-outline-dark btn-sm"
+                                    @click="openRatingModal(value)"
+                                >
+                                    前往評價
+                                </button>
+                            </div>
                         </div>
                     </td>
                     <td>{{ setStatus(value.paymentStatus) }}</td>
@@ -124,49 +154,11 @@ const goTicket = (idNumber) => {
             </tbody>
         </table>
         <nav v-if="activityList.length > 0">
-            <ul class="pagination justify-content-end m-auto">
-                <li
-                    class="page-item me-3"
-                    :class="{ disabled: currentPage === 1 }"
-                >
-                    <a
-                        class="page-link"
-                        href="#"
-                        aria-label="Previous"
-                        @click.prevent="currentPage > 1 && currentPage--"
-                    >
-                        <span aria-hidden="true">&lt;</span>
-                    </a>
-                </li>
-                <li
-                    v-for="page in totalPages"
-                    :key="page"
-                    class="page-item"
-                    :class="{ active: page === currentPage }"
-                >
-                    <a
-                        class="page-link rounded me-3 border-dark"
-                        href="#"
-                        @click.prevent="currentPage = page"
-                        >{{ page }}</a
-                    >
-                </li>
-                <li
-                    class="page-item"
-                    :class="{ disabled: currentPage === totalPages }"
-                >
-                    <a
-                        class="page-link"
-                        href="#"
-                        aria-label="Next"
-                        @click.prevent="
-                            currentPage < totalPages && currentPage++
-                        "
-                    >
-                        <span aria-hidden="true">&gt;</span>
-                    </a>
-                </li>
-            </ul>
+            <Pagination
+                :current-page="currentPage"
+                :total-pages="totalPages"
+                @update:currentPage="handlePageChange"
+            />
         </nav>
     </div>
 </template>

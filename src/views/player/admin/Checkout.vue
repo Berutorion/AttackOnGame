@@ -91,6 +91,24 @@
                             ></error-message>
                         </div>
                         <div class="mb-3 require-icon">
+                            <label for="InputEmail" class="form-label"
+                                >電子郵件</label
+                            >
+                            <v-field
+                                id="InputEmail"
+                                v-model="formData.email"
+                                type="text"
+                                class="form-control"
+                                rules="required|email"
+                                name="電子郵件"
+                                :class="{ 'is-invalid': errors['電子郵件'] }"
+                            ></v-field>
+                            <error-message
+                                name="電子郵件"
+                                class="text-danger"
+                            ></error-message>
+                        </div>
+                        <div class="mb-3 require-icon">
                             <label for="personNum" class="form-label"
                                 >報名人數
                                 <span class="text-grey66"
@@ -120,7 +138,7 @@
                             >
                             <textarea
                                 id="inputRemark"
-                                v-model="formData.note"
+                                v-model="formData.notes"
                                 type="text"
                                 class="form-control"
                                 placeholder="有什麼想跟主揪說的話嗎？歡迎留言唷"
@@ -184,12 +202,23 @@
                                 name="同意活動政策"
                                 class="text-danger"
                             ></error-message>
-                            <button
-                                type="submit"
-                                class="btn btn-primary mt-5 fw-bold px-4 mx-auto"
+                            <div
+                                class="py-4 gap-2 mt-5 justify-content-center d-flex align-items-center"
                             >
-                                確認報名，前往結帳
-                            </button>
+                                <RollBack
+                                    v-if="theEventId"
+                                    :route-link="{
+                                        name: 'SingleEvent',
+                                        params: { eventId: theEventId },
+                                    }"
+                                ></RollBack>
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary fw-bold px-4"
+                                >
+                                    確認報名，前往結帳
+                                </button>
+                            </div>
                         </div>
                     </v-form>
                 </div>
@@ -198,6 +227,7 @@
     </div>
 </template>
 <script setup>
+import RollBack from '@/components/common/rollBack.vue';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import useIndexStore from '@/stores/index';
@@ -207,6 +237,8 @@ import modal from '@/components/common/simpleModal.vue';
 import toLocalString from '@/utilities/toLocalString';
 import useAlert from '@/stores/alert';
 
+const orderStore = useFormStore();
+const router = useRouter();
 const alterStore = useAlert();
 const route = useRoute();
 const BsModal = ref(null);
@@ -228,19 +260,30 @@ const formData = ref({
     userName: '',
     phoneNum: '',
     personNum: 1,
-    note: '',
+    email: '',
+    notes: '',
     payPrice: null,
 });
-const orderStore = useFormStore();
-const router = useRouter();
+
+const createPayment = async (orderId) => {
+    try {
+        const res = await PlayerAPI.createPayment({
+            orderId,
+        });
+        orderStore.updatePaymentData(res.data);
+        router.push({
+            name: 'ReCheckout',
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 const postOrder = async (formdata) => {
     await PlayerAPI.postOrder(formdata)
         .then((res) => {
             console.log(res);
-            router.push({
-                name: 'ReCheckout',
-                params: { eventId: theEventId.value },
-            });
+            createPayment(res.data.idNumber);
         })
         .catch((err) => {
             if (err.response.data.message.includes('E11000')) {
@@ -258,6 +301,7 @@ const postOrder = async (formdata) => {
             }
         });
 };
+
 const onSubmitSuccess = () => {
     formData.value.payPrice =
         Number(formData.value.personNum) *
@@ -270,7 +314,8 @@ const onSubmitSuccess = () => {
         name: formData.value.userName,
         phone: String(formData.value.phoneNum),
         registrationCount: Number(formData.value.personNum),
-        note: formData.value.note,
+        email: formData.value.email,
+        notes: formData.value.notes,
     };
     postOrder(postOrderObj);
 };
@@ -297,6 +342,7 @@ const useDefault = (data) => {
     console.log(data);
     formData.value.phoneNum = indexStore.playerData.phone;
     formData.value.userName = indexStore.playerData.name;
+    formData.value.email = indexStore.userData.email;
 };
 const handleCheckboxChange = () => {
     if (isDefaultChecked.value) {
@@ -304,6 +350,7 @@ const handleCheckboxChange = () => {
     } else {
         formData.value.phoneNum = '';
         formData.value.userName = '';
+        formData.value.email = '';
     }
 };
 
@@ -314,7 +361,7 @@ onMounted(() => {
     if (orderStore.isNew === false) {
         formData.value.phoneNum = orderStore.formData.phoneNum;
         formData.value.personNum = orderStore.formData.personNum;
-        formData.value.note = orderStore.formData.note;
+        formData.value.notes = orderStore.formData.notes;
         formData.value.userName = orderStore.formData.userName;
     }
 });
@@ -331,13 +378,6 @@ body {
 
     .sub-title {
         font-size: 1.5rem;
-    }
-
-    .require-icon::before {
-        content: '*';
-        font-size: 0.75rem;
-        color: #dc3545;
-        margin-right: 4px;
     }
 }
 </style>

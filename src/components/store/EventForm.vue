@@ -3,6 +3,7 @@ import { defineModel, ref } from 'vue';
 import { ErrorMessage, Field as VField, Form as VForm } from 'vee-validate';
 import * as yup from 'yup';
 import EventAPI from '@/api/Event';
+import ImageAPI from '@/api/Image';
 import modal from '@/components/common/simpleModal.vue';
 import Loading from '@/components/common/Loading.vue';
 
@@ -27,17 +28,34 @@ const isLoading = ref(false);
 const myData = ref(...formData);
 const BsModal = ref(null);
 const modalText = ref('');
+const fileImg = ref(null);
+const eventIdData = ref('');
 const dateFormat = (time) => {
     const originalDateString = time;
     const formattedDateString = `${originalDateString}:00Z`;
     return formattedDateString;
 };
+const postImage = async (eventId, file) => {
+    await ImageAPI.postEventImg(eventId, file)
+        .then((res) => {
+            console.log(res);
+            BsModal.value.myModalShow();
+            console.log('imgSuccess', formData.value.eventImageUrl);
+        })
+        .catch((err) => {
+            console.log('imgErrEventId', eventIdData.value);
+            console.log('imgErr', err);
+        });
+};
 const postEventGo = async (data = {}) => {
     await EventAPI.postEvent(data)
-        .then(() => {
+        .then((res) => {
             modalText.value = `「${myData.value.title}」活動建立成功`;
             isLoading.value = false;
-            BsModal.value.myModalShow();
+
+            console.log('活動建立成功', res);
+            console.log('活動eventId', res.data.data.idNumber);
+            eventIdData.value = res.data.data.idNumber;
         })
         .catch((err) => {
             isLoading.value = false;
@@ -49,6 +67,9 @@ const postEventGo = async (data = {}) => {
             modalText.value = `「${myData.value.title}」活動建立失敗<br>${errText.value}`;
 
             BsModal.value.myModalShow();
+        })
+        .then(() => {
+            postImage(eventIdData.value, fileImg.value);
         });
 };
 const onSend = (theData) => {
@@ -102,11 +123,17 @@ const formDataSchema = {
         .required('請填寫最大參與人數'),
     participationFee: yup
         .number()
+        .notOneOf([0], '票價不得為0')
         .typeError('請輸入數字')
         .integer('必須為整數')
         .required('請填寫票價'),
     address: yup.string().required('地址為必填項目'),
     eventImageUrl: yup.string().required('請上傳圖片'),
+};
+const handleFileUpload = (event) => {
+    console.log(event);
+    const file = event.target.files[0];
+    fileImg.value = file;
 };
 </script>
 
@@ -373,6 +400,7 @@ const formDataSchema = {
                         name="eventImageUrl"
                         :rules="formDataSchema.eventImageUrl"
                         :class="{ 'is-invalid': errors['eventImageUrl'] }"
+                        @change="handleFileUpload($event)"
                     >
                     </v-field>
                     <label class="input-group-text" for="eventImageUrl"

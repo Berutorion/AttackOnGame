@@ -39,6 +39,35 @@
                         ></error-message>
                     </div>
                     <div class="mb-3">
+                        <label for="avatar" class="form-label">上傳頭像</label>
+                        <input
+                            id="avatar"
+                            type="file"
+                            class="form-control"
+                            name="avatar"
+                            @change="handleFileUpload"
+                        />
+                        <error-message
+                            name="avatar"
+                            class="text-danger"
+                        ></error-message>
+                    </div>
+                    <div class="mb-3">
+                        <h3 class="fs-6 fw-bold mt-3">喜歡的桌遊類型</h3>
+                        <label for="avatar" class="form-label">上傳頭像</label>
+                        <input
+                            id="avatar"
+                            type="file"
+                            class="form-control"
+                            name="avatar"
+                            @change="handleFileUpload"
+                        />
+                        <error-message
+                            name="avatar"
+                            class="text-danger"
+                        ></error-message>
+                    </div>
+                    <div class="mb-3">
                         <h3 class="fs-6 fw-bold mt-3">喜歡的桌遊類型</h3>
                         <div class="form-check">
                             <input
@@ -89,18 +118,38 @@
 <script setup>
 import UserAccess from '@/components/UserAccess.vue';
 import PlayerAPI from '@/api/Player';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import useIndexStore from '@/stores/index';
+import ImageAPI from '@/api/Image';
 
+const indexStore = useIndexStore();
+const userData = computed(() => indexStore.userData);
 const router = useRouter();
 const userForm = ref({
     name: '',
     phone: '',
-    avatar: 'https://example.com/avatar.jpg',
+    avatar: '',
     preferGame: [],
 });
-// const theUserData = user();
 
+const postImage = async (userId, file) => {
+    await ImageAPI.postPlayerImg(userId, file)
+        .then((res) => {
+            userForm.value.avatar = res.data.imgURL;
+            console.log('res.imgURL', res.data.imgURL);
+            // window.location.reload();
+        })
+        .catch((err) => {
+            console.log('imageErr', err);
+        });
+};
+
+const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    userForm.value.avatar = file;
+    postImage(userData.value.id, userForm.value.avatar);
+};
 const postUserForm = async (userFormData) => {
     if (
         userForm.value.name === '' ||
