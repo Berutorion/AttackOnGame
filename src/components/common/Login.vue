@@ -3,31 +3,53 @@
         <v-form v-slot="{ errors }" @submit="onSubmit">
             <div class="mb-3">
                 <label for="email" class="form-label require-icon">帳號</label>
-                <v-field id="email" v-model="formData.email" type="email" class="form-control" name="email"
-                    :rules="playerLoginSchema.email" :class="{ 'is-invalid': errors['email'] }"></v-field>
+                <v-field
+                    id="email"
+                    v-model="formData.email"
+                    type="email"
+                    class="form-control"
+                    name="email"
+                    :rules="playerLoginSchema.email"
+                    :class="{ 'is-invalid': errors['email'] }"
+                ></v-field>
                 <error-message name="email" class="text-danger"></error-message>
             </div>
 
             <div class="mb-3">
-                <label for="password" class="form-label require-icon">密碼</label>
+                <label for="password" class="form-label require-icon"
+                    >密碼</label
+                >
                 <div class="position-relative">
-                    <span class="material-symbols-outlined position-absolute eyes-icon fs-8 me-2"
-                        @click="togglePasswordVisibility('password')">
+                    <span
+                        class="material-symbols-outlined position-absolute eyes-icon fs-8 me-2"
+                        @click="togglePasswordVisibility('password')"
+                    >
                         {{
-            passwordFieldType === 'password'
-                ? 'visibility_off'
-                : 'visibility'
-        }}
+                            passwordFieldType === 'password'
+                                ? 'visibility_off'
+                                : 'visibility'
+                        }}
                     </span>
-                    <v-field id="InputPassword1" v-model="formData.password" :type="passwordFieldType"
-                        class="form-control" rules="required|min:8|regex:(?=.*[A-Za-z])(?=.*\d)" placeholder="請輸入密碼"
-                        name="密碼" :class="{ 'is-invalid': errors['密碼'] }"></v-field>
+                    <v-field
+                        id="InputPassword1"
+                        v-model="formData.password"
+                        :type="passwordFieldType"
+                        class="form-control"
+                        rules="required|min:8|regex:(?=.*[A-Za-z])(?=.*\d)"
+                        placeholder="請輸入密碼"
+                        name="密碼"
+                        :class="{ 'is-invalid': errors['密碼'] }"
+                    ></v-field>
                 </div>
-                <error-message name="password" class="text-danger"></error-message>
+                <error-message
+                    name="password"
+                    class="text-danger"
+                ></error-message>
             </div>
 
             <div class="password-forget d-flex justify-content-end mt-1">
-                <span class="text-muted" @click="goToForgetPasswordPage">忘記密碼
+                <span class="text-muted" @click="goToForgetPasswordPage"
+                    >忘記密碼
                 </span>
             </div>
 

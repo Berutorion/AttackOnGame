@@ -1,28 +1,50 @@
 <template>
     <div class="store-introduction container-fluid">
-        <Loading v-if="isLoading" :class="{ 'loading-fade': !isLoading }"></Loading>
+        <Loading
+            v-if="isLoading"
+            :class="{ 'loading-fade': !isLoading }"
+        ></Loading>
         <div class="container pt-2">
             <div class="row">
                 <div class="col-12">
-                    <div class="store-introduction__banner rounded-4 mb-4 bg-white border border-2 border-greyE9">
-                        <div class="banner__background rounded-top-4" :style="{ height: '300px' }">
-                            <img referrerpolicy="no-referrer" class="w-100 inset-0 object-fit-cover rounded-top-4"
-                                height="300px" :src="storeViewObject.avatar" />
+                    <div
+                        class="store-introduction__banner rounded-4 mb-4 bg-white border border-2 border-greyE9"
+                    >
+                        <div
+                            class="banner__background rounded-top-4"
+                            :style="{ height: '300px' }"
+                        >
+                            <img
+                                referrerpolicy="no-referrer"
+                                class="w-100 inset-0 object-fit-cover rounded-top-4"
+                                height="300px"
+                                :src="storeViewObject.avatar"
+                            />
                         </div>
                         <div class="banner__content row p-4">
                             <div class="col-3 col-lg-2">
-                                <img referrerpolicy="no-referrer" width="160px" height="160px"
-                                    class="rounded-circle object-fit-cover mb-2 border" :src="storeViewObject.avatar"
-                                    :alt="storeViewObject.name" />
+                                <img
+                                    referrerpolicy="no-referrer"
+                                    width="160px"
+                                    height="160px"
+                                    class="rounded-circle object-fit-cover mb-2 border"
+                                    :src="storeViewObject.avatar"
+                                    :alt="storeViewObject.name"
+                                />
                             </div>
 
                             <div class="col-9 col-lg-10">
-                                <div class="row justify-content-between align-items-top">
+                                <div
+                                    class="row justify-content-between align-items-top"
+                                >
                                     <div class="col-6 col-lg-8">
-                                        <h6 class="pb-3" :style="{
-            borderBottom:
-                '1px dashed #c9c9c9',
-        }">
+                                        <h6
+                                            class="pb-3"
+                                            :style="{
+                                                borderBottom:
+                                                    '1px dashed #c9c9c9',
+                                            }"
+                                        >
                                             {{ storeViewObject.name }}
                                         </h6>
                                         <p class="mb-2">
@@ -45,11 +67,15 @@
                     <div class="store-introduction__content">
                         <div class="sub-title_wrap mb-3">
                             <h2
-                                class="fs-6 text-primary fw-bold pb-2 border-bottom border-2 border-primary fz-6 d-inline-block sub-title mb-0">
+                                class="fs-6 text-primary fw-bold pb-2 border-bottom border-2 border-primary fz-6 d-inline-block sub-title mb-0"
+                            >
                                 其他活動
                             </h2>
                         </div>
-                        <EventPanel :data="eventCards" :keywords="keywords"></EventPanel>
+                        <EventPanel
+                            :data="eventCards"
+                            :keywords="keywords"
+                        ></EventPanel>
                     </div>
                 </div>
             </div>

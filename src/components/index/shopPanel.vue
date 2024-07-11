@@ -1,18 +1,33 @@
 <template>
-    <div v-in-view="{ once: true }" class="in-view container-fluid index-store-section">
+    <div
+        v-in-view="{ once: true }"
+        class="in-view container-fluid index-store-section"
+    >
         <div class="index-store-section">
-            <div class="dot-bg" style="" :style="{ backgroundImage: 'url(' + DotBg + ')' }"></div>
+            <div
+                class="dot-bg"
+                style=""
+                :style="{ backgroundImage: 'url(' + DotBg + ')' }"
+            ></div>
             <div class="py-16 container">
-                <TitlePanel class="ani-entrance ani-entrance-0" :tag="titleData.tag" :title="titleData.title"
-                    :desc="titleData.desc"></TitlePanel>
+                <TitlePanel
+                    class="ani-entrance ani-entrance-0"
+                    :tag="titleData.tag"
+                    :title="titleData.title"
+                    :desc="titleData.desc"
+                ></TitlePanel>
                 <div v-if="errorMessage.split()" class="text-center mt-4">
                     <p>{{ errorMessage }}</p>
                 </div>
                 <div v-if="data.length > 0" class="row">
                     <Swiper :data="data" class="ani-entrance ani-entrance-2">
                         <template #slideContent="{ slide }">
-                            <StoreCard :is-lazy-load="true" :data="slide" css-style="w-100"
-                                @click="onStoreCardClick(slide.user)">
+                            <StoreCard
+                                :is-lazy-load="true"
+                                :data="slide"
+                                css-style="w-100"
+                                @click="onStoreCardClick(slide.user)"
+                            >
                                 <!-- store.user -->
                             </StoreCard>
                         </template>
