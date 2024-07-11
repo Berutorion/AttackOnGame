@@ -104,26 +104,10 @@ const PlayerAPI = {
      * @description 取得活動結帳頁的資料
      */
 
-    async postOrder({
-        eventId,
-        payment,
-        discount,
-        name,
-        phone,
-        registrationCount,
-        note,
-    }) {
+    async postOrder(data) {
         try {
-            const response = await Axios.post('/api/v1/order', {
-                eventId,
-                payment,
-                discount,
-                name,
-                phone,
-                registrationCount,
-                note,
-            });
-            return response;
+            const response = await Axios.post('/api/v1/order', data);
+            return response.data;
         } catch (error) {
             console.error(error);
             throw error;
@@ -137,6 +121,32 @@ const PlayerAPI = {
     async getTicket(idNumber) {
         try {
             const response = await Axios.get(`/api/v1/order/${idNumber}`);
+            return response;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
+
+    async createPayment(data) {
+        try {
+            const response = await Axios.post('/api/v1/payment', data);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
+    /**
+     * postReview
+     * @param {string} orderNumber 訂單ID
+     * @param {number} rate 評價分數
+     * @param {string} content 評論內容
+     * @description 玩家評論店家
+     */
+    async postReview(data) {
+        try {
+            const response = await Axios.post('/api/v1/review', data);
             return response;
         } catch (error) {
             console.error(error);

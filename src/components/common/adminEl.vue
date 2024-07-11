@@ -1,39 +1,26 @@
 <template>
     <div class="user-admin-el-wrap">
         <p class="fs-8 fw-bold text-grey66">{{ profile.label }}帳戶資訊</p>
-        <div
-            style="width: 130px; height: 130px"
-            class="img-wrap border-5 border rounded-circle mx-auto mt-5 mb-2"
-            :class="`border-${profile.color}`"
-        >
-            <img
-                referrerpolicy="no-referrer"
-                class="avatar"
-                :src="profile.imgUrl"
-                alt="玩家圖片"
-            />
+        <div style="width: 130px; height: 130px" class="img-wrap border-5 border rounded-circle mx-auto mt-5 mb-2"
+            :class="`border-${profile.color}`">
+            <img referrerpolicy="no-referrer" class="avatar" :src="profile.imgUrl" alt="玩家圖片" />
         </div>
         <div class="mb-4 text-center fw-bold">
             {{ profile.name }}
         </div>
 
         <ul class="user-admin-el-ul">
-            <li v-for="route in routes" :key="route.name" class="mb-1">
-                <router-link
-                    :to="{ name: route.name, params: route.params }"
-                    class="nav-link d-flex rounded justify-content-center"
-                >
-                    <span
-                        class="material-symbols-outlined"
-                        :class="[
-                            isActive(route.name)
-                                ? 'text-primary'
-                                : 'text-grey33',
-                        ]"
-                    >
-                        {{ route.icon }}
+            <li v-for="routeItem in routes" :key="routeItem.name" class="mb-1">
+                <router-link :to="{ name: routeItem.name, params: routeItem.params }"
+                    class="nav-link d-flex rounded justify-content-center">
+                    <span class="material-symbols-outlined" :class="[
+            isActive(routeItem.name)
+                ? 'text-primary'
+                : 'text-grey33',
+        ]">
+                        {{ routeItem.icon }}
                     </span>
-                    <p class="ps-3 text-center">{{ route.label }}</p>
+                    <p class="ps-3 text-center">{{ routeItem.label }}</p>
                 </router-link>
             </li>
         </ul>

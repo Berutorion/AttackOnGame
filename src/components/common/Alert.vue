@@ -1,7 +1,7 @@
 <template>
     <teleport to="body">
         <button class="d-none" @click="open">open modal</button>
-        <div v-if="showModal" class="modal-overlay" @click.self="close">
+        <div v-if="showModal" class="modal-overlay backdrop-blur" @click.self="close">
             <div class="modal-dialog">
                 <div class="modal-content noto-serif-tc fw-bold">
                     <div class="modal-header">
@@ -11,11 +11,7 @@
                         <p>{{ message }}</p>
                     </div>
                     <div class="modal-footer">
-                        <button
-                            type="button"
-                            class="btn btn-primary"
-                            @click="close"
-                        >
+                        <button type="button" class="btn btn-primary" @click="close">
                             關閉
                         </button>
                     </div>
