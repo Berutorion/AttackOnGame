@@ -5,6 +5,15 @@ import { useRouter } from 'vue-router';
 import toLocalString from '@/utilities/toLocalString';
 import EmptyTable from '@/components/common/EmptyTable.vue';
 import Pagination from '@/components/common/Pagination.vue';
+import starRatingModal from '@/components/player/starRatingModal.vue';
+
+const modalData = ref(null);
+const RatingModal = ref(null);
+const openRatingModal = (data) => {
+    modalData.value = data;
+    console.log('modalData.value', modalData.value);
+    RatingModal.value.myModalShow();
+};
 
 const PaymentStatus = {
     pending: '尚未付款',
@@ -28,6 +37,7 @@ const totalPages = computed(() => {
 const paginatedList = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage;
     const end = start + itemsPerPage;
+    console.log('props.activityList', props.activityList);
     return props.activityList.slice(start, end);
 });
 const setStatus = (x) => {
@@ -57,6 +67,11 @@ function handlePageChange(newPage) {
         class="d-flex flex-column justify-content-between flex-grow-1 activity-page-table-wrap"
     >
         <!-- table -->
+        <starRatingModal
+            ref="RatingModal"
+            :modal-data="modalData"
+            title="新增評論"
+        ></starRatingModal>
         <table class="table align-middle table-hover mt-3">
             <thead>
                 <tr>
@@ -110,13 +125,25 @@ function handlePageChange(newPage) {
                                     前往 <span class="d-block">票券 </span>
                                 </p>
                             </button>
-                            <button
-                                v-if="value.status === '已使用'"
-                                type="button"
-                                class="btn btn-outline-dark btn-sm"
-                            >
-                                前往評價
-                            </button>
+
+                            <div v-if="value.status === '已使用'">
+                                <button
+                                    v-if="value.isCommented"
+                                    type="button"
+                                    class="btn btn-outline-dark btn-sm"
+                                    disabled
+                                >
+                                    已評價
+                                </button>
+                                <button
+                                    v-else
+                                    type="button"
+                                    class="btn btn-outline-dark btn-sm"
+                                    @click="openRatingModal(value)"
+                                >
+                                    前往評價
+                                </button>
+                            </div>
                         </div>
                     </td>
                     <td>{{ setStatus(value.paymentStatus) }}</td>

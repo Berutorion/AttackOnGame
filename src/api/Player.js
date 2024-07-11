@@ -137,6 +137,22 @@ const PlayerAPI = {
             throw error;
         }
     },
+    /**
+     * postReview
+     * @param {string} orderNumber 訂單ID
+     * @param {number} rate 評價分數
+     * @param {string} content 評論內容
+     * @description 玩家評論店家
+     */
+    async postReview(data) {
+        try {
+            const response = await Axios.post('/api/v1/review', data);
+            return response;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
 };
 
 export default PlayerAPI;
