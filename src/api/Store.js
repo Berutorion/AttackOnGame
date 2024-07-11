@@ -102,6 +102,7 @@ const StoreAPI = {
             const response = await Axios.get(
                 `/api/v1/myevent/${idNumber}/qr-code`
             );
+            console.log('response', response);
             return response;
         } catch (error) {
             console.error(error);

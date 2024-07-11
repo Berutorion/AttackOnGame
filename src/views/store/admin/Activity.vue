@@ -11,10 +11,10 @@
                     <div
                         class="d-flex justify-content-between align-items-center pb-3 border-bottom"
                     >
-                        <p class="fs-7 fw-bold">
+                        <p class="fs-7 fw-bold line-clamp line-clamp-1">
                             {{ order.title }}
                         </p>
-                        <div class="d-flex">
+                        <div class="d-flex flex-shrink-0">
                             <router-link
                                 :to="{
                                     name: 'ScannerTicket',
