@@ -112,7 +112,9 @@
 import { onMounted, ref } from 'vue';
 import Modal from 'bootstrap/js/dist/modal';
 import PlayerAPI from '@/api/Player';
+import useAlert from '@/stores/alert';
 
+const AlertStore = useAlert();
 const props = defineProps({
     title: { type: String, default: '' },
     modalData: { type: Object, default: () => ({}) },
@@ -127,10 +129,18 @@ const postReview = async () => {
         rate: starRatingNum.value,
         content: content.value,
     });
-    console.log(mydata.value);
-    await PlayerAPI.postReview(mydata.value).then((res) => {
-        console.log('GOOD POST res', res);
-    });
+    try {
+        const res = await PlayerAPI.postReview(mydata.value);
+        console.log('Response', res);
+        if (res.status === true) {
+            AlertStore.openModal('success', '評論成功');
+        }
+    } catch (error) {
+        const {
+            response: { data },
+        } = error;
+        AlertStore.openModal('error', data.message);
+    }
 };
 
 onMounted(() => {

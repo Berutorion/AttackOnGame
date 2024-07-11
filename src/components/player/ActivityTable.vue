@@ -126,14 +126,24 @@ function handlePageChange(newPage) {
                                 </p>
                             </button>
 
-                            <button
-                                v-if="value.status === '已使用'"
-                                type="button"
-                                class="btn btn-outline-dark btn-sm"
-                                @click="openRatingModal(value)"
-                            >
-                                前往評價
-                            </button>
+                            <div v-if="value.status === '已使用'">
+                                <button
+                                    v-if="value.isCommented"
+                                    type="button"
+                                    class="btn btn-outline-dark btn-sm"
+                                    disabled
+                                >
+                                    已評價
+                                </button>
+                                <button
+                                    v-else
+                                    type="button"
+                                    class="btn btn-outline-dark btn-sm"
+                                    @click="openRatingModal(value)"
+                                >
+                                    前往評價
+                                </button>
+                            </div>
                         </div>
                     </td>
                     <td>{{ setStatus(value.paymentStatus) }}</td>
