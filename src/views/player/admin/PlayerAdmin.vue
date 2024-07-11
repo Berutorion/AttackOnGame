@@ -58,33 +58,19 @@
                         <error-message name="preferGames" class="text-danger"></error-message>
                     </div>
 
-                    <!-- <div class="mb-3">
+                    <div class="mb-3">
                         <label for="avatar" class="form-label">上傳頭像</label>
                         <div class="d-flex gap-2 align-items-center">
                             <div class="mb-2">
-                                <img
-                                    v-if="formData.avatar"
-                                    width="54"
-                                    :src="formData.avatar"
-                                    alt=""
-                                />
+                                <img v-if="formData.avatar" width="54" :src="formData.avatar" alt="" />
                             </div>
 
-                            <input
-                                id="avatar"
-                                type="file"
-                                class="form-control"
-                                name="avatar"
-                                :disabled="!canEdit"
-                                @change="handleFileUpload"
-                            />
+                            <input id="avatar" type="file" class="form-control" name="avatar" :disabled="!canEdit"
+                                @change="handleFileUpload" />
                         </div>
 
-                        <error-message
-                            name="avatar"
-                            class="text-danger"
-                        ></error-message>
-                    </div> -->
+                        <error-message name="avatar" class="text-danger"></error-message>
+                    </div>
 
                     <div class="section">
                         <button class="btn btn-outline-primary mr-4" @click.prevent="toggleEditStatus">
@@ -220,16 +206,6 @@ export default defineComponent({
         border-radius: 8px;
         padding: 0 48px;
     }
-
-    .player-admin_main {
-        flex: 0 0 calc(66.6667% - 16px / 2);
-        border-radius: 8px;
-        padding: 0 48px;
-    }
-}
-
-.form-label:last-child {
-    margin-bottom: 0;
 }
 
 .form-label:last-child {

@@ -1,5 +1,5 @@
 <template>
-    <div class="col-6 col-lg-3 mb-3 event-card cursor">
+    <div class="event-card cursor" :class="cssStyle">
         <div class="card h-100 p-2">
             <div class="position-relative pt-150per event-card-img-wrap">
                 <div
@@ -14,7 +14,12 @@
                     class="w-100 h-100 inset-0 object-fit-cover position-absolute"
                     :src="computedEventData.eventImageUrl"
                     :alt="computedEventData.title"
+                    loading="lazy"
                 />
+                <div
+                    v-if="isLazyLoad"
+                    class="swiper-lazy-preloader swiper-lazy-preloader-black"
+                ></div>
             </div>
 
             <div class="card-body p-2">
@@ -71,6 +76,10 @@ import STATUS_MAP from '@/constant/eventStatus';
 import setEventAttr from '@/utilities/setEventAttr';
 
 const props = defineProps({
+    isLazyLoad: {
+        type: Boolean,
+        default: false,
+    },
     data: {
         type: Object,
         default: () => ({}),
@@ -78,6 +87,10 @@ const props = defineProps({
     keywords: {
         type: String,
         default: '',
+    },
+    cssStyle: {
+        type: String,
+        default: 'col-6 col-lg-3 mb-3',
     },
 });
 const lineStyle = (currentNum, maxNum) => {
@@ -109,6 +122,9 @@ const computedEventData = computed(() => {
 </script>
 <style lang="scss">
 .event-card {
+    .card-title-h {
+        height: 54px;
+    }
     .event-card-img-wrap {
         overflow: hidden;
         img {
