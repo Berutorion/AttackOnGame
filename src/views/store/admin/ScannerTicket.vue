@@ -18,7 +18,11 @@
                             ></rollBack>
                         </div>
                         <div class="camera-container p-3">
-                            <QrCode class="camera-view"></QrCode>
+                            <QrCode
+                                class="camera-view"
+                                :codes="codeList"
+                                @getTickets="getTickets()"
+                            ></QrCode>
                         </div>
                     </div>
                     <div
@@ -137,6 +141,9 @@ const ticketsAttr = computed(() => {
         status: TICKET_STATUS_MAP[x.qrCodeStatus],
         isActive: '',
     }));
+});
+const codeList = computed(() => {
+    return tickets.value.map((x) => x.idNumber);
 });
 </script>
 <style lang="scss" scoped>

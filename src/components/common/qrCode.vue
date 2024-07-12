@@ -4,26 +4,56 @@
             :camera="camera"
             :track="paintBoundingBox"
             :barcode-formats="selectedBarcodeFormats"
-            @decode="onDecode"
             @detect="onDetect"
-            @init="onInit"
             @camera-on="onCameraReady"
+            @camera-off="onCameraOff"
         >
+            <div v-show="showScanConfirmation" class="scan-confirmation">
+                <p>aaa</p>
+            </div>
         </qrcode-stream>
-        <div v-if="decodedString" class="decoded-result">
-            解碼結果~: {{ decodedString }}
+        <div v-if="usedQrcodes" class="decoded-result">
+            <div
+                v-for="used in usedQrcodes"
+                :key="used"
+                class="d-flex justify-content-center text-primary"
+            >
+                <span class="material-symbols-outlined px-1">
+                    check_circle
+                </span>
+                <p>{{ used }}</p>
+            </div>
+        </div>
+        <div v-if="errorQrcodes" class="decoded-result">
+            <div
+                v-for="error in errorQrcodes"
+                :key="error"
+                class="d-flex justify-content-center text-grey33"
+            >
+                <span class="material-symbols-outlined px-1"> error </span>
+                <p>{{ error }}</p>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
 import { QrcodeStream } from 'vue-qrcode-reader';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, defineProps, defineEmits } from 'vue';
 
+const emit = defineEmits(['getTickets']);
 const camera = ref('user');
 const selectedBarcodeFormats = ref(['qr_code']);
-const decodedString = ref('');
-
+const showScanConfirmation = ref(false);
+const usedQrcodes = ref([]);
+const errorQrcodes = ref([]);
+const { codes } = defineProps({
+    codes: {
+        type: Array,
+        default: () => [],
+    },
+});
+console.log(codes);
 function paintBoundingBox(detectedCodes, ctx) {
     detectedCodes.forEach((detectedCode) => {
         const {
@@ -35,33 +65,52 @@ function paintBoundingBox(detectedCodes, ctx) {
         ctx.strokeRect(x, y, width, height);
     });
 }
-
-function onDecode(decodedValue) {
-    console.log('Decoded string:', decodedValue);
-    decodedString.value = decodedValue;
+function validateTicketFormat(ticket) {
+    const regex = /^ticket-\d{6}-[a-z0-9]{4}$/;
+    return regex.test(ticket);
+}
+function validateTicketAccess(ticket) {
+    console.log(codes);
+    return codes.includes(ticket);
 }
 function onDetect(detection) {
-    console.log('QR code detected but not decoded yet:', detection);
-    console.log('rawValue:', detection[0].rawValue);
-}
-async function onInit(promise) {
-    console.log('onInit called...');
-    promise
-        .then(() => {
-            console.log('Initialization successful');
-        })
-        .catch((error) => {
-            console.error('Initialization error:', error);
-            if (error.name === 'NotAllowedError') {
-                alert('請允許訪問相機');
+    usedQrcodes.value = [];
+    detection.forEach((e) => {
+        console.log(e.rawValue);
+        if (
+            validateTicketFormat(e.rawValue) &&
+            validateTicketAccess(e.rawValue)
+        ) {
+            if (!usedQrcodes.value.includes(e.rawValue)) {
+                usedQrcodes.value.push(e.rawValue);
             }
-        });
+        } else if (!errorQrcodes.value.includes(e.rawValue)) {
+            errorQrcodes.value.push(e.rawValue);
+        }
+    });
+    emit('getTickets');
 }
 
 function onCameraReady() {
-    console.log('Camera is ready');
+    showScanConfirmation.value = false;
+}
+function onCameraOff() {
+    showScanConfirmation.value = true;
 }
 onMounted(() => {
     camera.value = 'user';
 });
 </script>
+<style scoped>
+.scan-confirmation {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(255, 255, 255, 0.8);
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+}
+</style>
