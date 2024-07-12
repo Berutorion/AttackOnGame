@@ -30,8 +30,8 @@ function paintBoundingBox(detectedCodes, ctx) {
             boundingBox: { x, y, width, height },
         } = detectedCode;
 
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = '#007bff';
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = '#0088CC';
         ctx.strokeRect(x, y, width, height);
     });
 }
@@ -40,7 +40,10 @@ function onDecode(decodedValue) {
     console.log('Decoded string:', decodedValue);
     decodedString.value = decodedValue;
 }
-
+function onDetect(detection) {
+    console.log('QR code detected but not decoded yet:', detection);
+    console.log('rawValue:', detection[0].rawValue);
+}
 async function onInit(promise) {
     console.log('onInit called...');
     promise
@@ -55,14 +58,10 @@ async function onInit(promise) {
         });
 }
 
-function onDetect(detection) {
-    console.log('QR code detected but not decoded yet:', detection);
-}
 function onCameraReady() {
     console.log('Camera is ready');
 }
 onMounted(() => {
-    console.log('ooo');
     camera.value = 'user';
 });
 </script>

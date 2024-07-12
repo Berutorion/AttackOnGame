@@ -68,29 +68,15 @@
                         myclass="w-40"
                         :dots-options="{
                             type: 'extra - rounded',
-                            color: '#212529',
+                            color: ticket.qrCodeColor,
                         }"
                         :corners-square-options="{
                             type: 'extra - rounded',
-                            color: '#212529',
+                            color: ticket.qrCodeColor,
                         }"
                         :corners-dot-options="{
                             type: 'extra - rounded',
                             color: ticket.qrCodeColor,
-                            gradient: {
-                                type: 'linear',
-                                rotation: 0,
-                                colorStops: [
-                                    {
-                                        offset: 0,
-                                        color: ticket.qrCodeColor.color1,
-                                    },
-                                    {
-                                        offset: 1,
-                                        color: ticket.qrCodeColor.color2,
-                                    },
-                                ],
-                            },
                         }"
                     />
                 </div>
@@ -195,8 +181,8 @@ const rawOrder = ref({});
 const rawtickets = ref([]);
 
 const TICKET_COLOR_MAP = {
-    pending: { color1: '#ffdd33', color2: '#fdc221' },
-    completed: { color1: '#9F9F9F', color2: '#9F9F9F' },
+    pending: '#212529',
+    completed: '#9F9F9F',
 };
 
 const getTicket = async (idNumber) => {
