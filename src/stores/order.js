@@ -31,7 +31,7 @@ export const useFormStore = defineStore('form', {
                     userName: '',
                     phoneNum: '',
                     personNum: 1,
-                    note: '',
+                    notes: '',
                     payPrice: 0,
                 };
             }

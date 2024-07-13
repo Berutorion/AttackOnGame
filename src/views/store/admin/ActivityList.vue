@@ -1,10 +1,7 @@
 <template>
     <div class="container-xxl">
         <div class="row p-3">
-            <Loading
-                v-if="isLoading"
-                :class="{ 'loading-fade': !isLoading }"
-            ></Loading>
+            <Loading v-if="isLoading" :class="{ 'loading-fade': !isLoading }"></Loading>
             <LeftEl></LeftEl>
             <div class="col-9 ps-3">
                 <div class="border rounded bg-white h-100 p-3 min-h-screen">
@@ -15,10 +12,8 @@
                         placeholder="快速搜尋"
                     />
                 </div> -->
-                    <div
-                        class="d-grid mt-3 gap-2 align-items-center fw-bold border-bottom pb-2"
-                        style="grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr"
-                    >
+                    <div class="d-grid mt-3 gap-2 align-items-center fw-bold border-bottom pb-2"
+                        style="grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr">
                         <p>操作</p>
                         <p>名稱</p>
 
@@ -29,23 +24,14 @@
                         <p>活動報名<br />截止日期</p>
                     </div>
                     <div v-if="events.length > 0">
-                        <div
-                            v-for="event in events"
-                            :key="event.idNumber"
-                            style="
+                        <div v-for="event in events" :key="event.idNumber" style="
                                 grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
-                            "
-                            class="py-2 d-grid gap-2 align-items-center border-bottom"
-                        >
+                            " class="py-2 d-grid gap-2 align-items-center border-bottom">
                             <div class="d-flex gap-2">
-                                <router-link
-                                    :to="{
-                                        name: 'StoreActivity',
-                                        params: { idNumber: event.idNumber },
-                                    }"
-                                    type="button"
-                                    class="btn btn-primary py-1 px-2 d-flex"
-                                >
+                                <router-link :to="{
+                name: 'StoreActivity',
+                params: { idNumber: event.idNumber },
+            }" type="button" class="btn btn-primary py-1 px-2 d-flex">
                                     <span class="material-symbols-outlined">
                                         visibility
                                     </span>
@@ -73,12 +59,12 @@
                             </div>
                             <div class="text-center">
                                 {{
-                                    stateText(
-                                        event.currentParticipantsCount,
-                                        event.maxParticipants,
-                                        event.minParticipants
-                                    )
-                                }}
+                stateText(
+                    event.currentParticipantsCount,
+                    event.maxParticipants,
+                    event.minParticipants
+                )
+            }}
                             </div>
                             <div class="text-center">
                                 {{ event.currentParticipantsCount }} /
@@ -119,7 +105,6 @@ const stateText = (current, max, min) => {
 const getEventAll = async () => {
     await StoreAPI.getMyEvent()
         .then((res) => {
-            console.log('order', res);
             events.value = res.data.data;
             setTimeout(() => {
                 isLoading.value = false;
