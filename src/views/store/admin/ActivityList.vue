@@ -113,7 +113,7 @@ const stateText = (current, max, min) => {
     if (current === max) return '已成團';
     if (current < min) return '未成團';
     if (current > max) return '揪團中';
-    return '其他';
+    return '揪團中';
 };
 
 const getEventAll = async () => {
