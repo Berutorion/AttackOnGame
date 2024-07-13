@@ -119,7 +119,6 @@ const stateText = (current, max, min) => {
 const getEventAll = async () => {
     await StoreAPI.getMyEvent()
         .then((res) => {
-            console.log('order', res);
             events.value = res.data.data;
             setTimeout(() => {
                 isLoading.value = false;
