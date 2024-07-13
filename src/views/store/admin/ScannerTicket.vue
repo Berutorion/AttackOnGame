@@ -1,35 +1,24 @@
 <template>
     <div class="container-xxl ticket-scanner-wrap">
         <div class="row p-3">
-            <Loading
-                v-if="isLoading"
-                :class="{ 'loading-fade': !isLoading }"
-            ></Loading>
+            <Loading v-if="isLoading" :class="{ 'loading-fade': !isLoading }"></Loading>
             <LeftEl></LeftEl>
             <div class="col-9 ps-3">
                 <div class="border rounded bg-white min-h-screen p-3">
                     <div>
                         <div class="d-flex flex-row-reverse">
-                            <rollBack
-                                :route-link="{
-                                    name: 'StoreActivity',
-                                    params: idNumber || '',
-                                }"
-                            ></rollBack>
+                            <rollBack :route-link="{
+                name: 'StoreActivity',
+                params: idNumber || '',
+            }"></rollBack>
                         </div>
                         <div class="camera-container p-3">
-                            <QrCode
-                                class="camera-view"
-                                :codes="codeList"
-                                :id-number="idNumber"
-                                @getTickets="getTickets()"
-                            ></QrCode>
+                            <QrCode class="camera-view" :codes="codeList" :id-number="idNumber"
+                                @getTickets="getTickets()"></QrCode>
                         </div>
                     </div>
-                    <div
-                        class="d-grid pb-2 pt-3 gap-2 text-grey9F border-bottom"
-                        style="grid-template-columns: 2fr 1fr 2fr 2fr"
-                    >
+                    <div class="d-grid pb-2 pt-3 gap-2 text-grey9F border-bottom"
+                        style="grid-template-columns: 2fr 1fr 2fr 2fr">
                         <p>報名者</p>
                         <p>報到狀態</p>
                         <p>票券編號</p>
@@ -39,16 +28,10 @@
                         <EmptyField text="還沒有人下訂單唷"></EmptyField>
                     </div>
                     <div v-else>
-                        <div
-                            v-for="user in ticketsAttr"
-                            :key="user.idNumber"
-                            class="d-grid gap-2 py-2 border-bottom"
-                            style="grid-template-columns: 2fr 1fr 2fr 2fr"
-                        >
+                        <div v-for="user in ticketsAttr" :key="user.idNumber" class="d-grid gap-2 py-2 border-bottom"
+                            style="grid-template-columns: 2fr 1fr 2fr 2fr">
                             <div class="d-flex align-items-center">
-                                <div
-                                    class="profile-img rounded-circle small-profile-img mx-1"
-                                >
+                                <div class="profile-img rounded-circle small-profile-img mx-1">
                                     <img :src="user.avatar" :alt="user.name" />
                                 </div>
                                 <p class="line-clamp-1 line-clamp">

@@ -1,18 +1,9 @@
 <template>
     <div class="container ticket-page_wrap">
-        <Loading
-            v-if="isLoading"
-            :class="{ 'loading-fade': !isLoading }"
-        ></Loading>
+        <Loading v-if="isLoading" :class="{ 'loading-fade': !isLoading }"></Loading>
         <div class="row py-3 justify-content-center">
-            <div
-                class="col-8 bg-white p-4 border rounded-3 noto-serif-tc lh-lg position-relative"
-            >
-                <RollBack
-                    v-if="store && store._id"
-                    class="mt-2"
-                    :route-link="{ name: 'PlayerActivity', params: {} }"
-                >
+            <div class="col-8 bg-white p-4 border rounded-3 noto-serif-tc lh-lg position-relative">
+                <RollBack v-if="store && store._id" class="mt-2" :route-link="{ name: 'PlayerActivity', params: {} }">
                 </RollBack>
                 <div class="px-4 pb-3">
                     <p class="fw-bold fs-6">
@@ -41,8 +32,8 @@
                             <p class="fs-10 text-grey9F fw-bold">票價</p>
                             <p>
                                 NT$ {{ event.participationFee }} / 張，共 NT${{
-                                    order.payment
-                                }}
+            order.payment
+        }}
                                 元
                             </p>
                         </div>
@@ -61,70 +52,45 @@
                     </div>
                 </div>
                 <div class="pt-5 d-flex flex-wrap justify-content-center gap-3">
-                    <QRCodeVue3
-                        v-for="ticket in ticketList"
-                        :key="ticket.idNumber"
-                        :value="ticket.idNumber"
-                        :image="Logo"
-                        myclass="w-40"
-                        :dots-options="{
-                            type: 'extra - rounded',
-                            color: ticket.qrCodeColor,
-                        }"
-                        :corners-square-options="{
-                            type: 'extra - rounded',
-                            color: ticket.qrCodeColor,
-                        }"
-                        :corners-dot-options="{
-                            type: 'extra - rounded',
-                            color: ticket.qrCodeColor,
-                        }"
-                    />
+                    <QRCodeVue3 v-for="ticket in ticketList" :key="ticket.idNumber" :value="ticket.idNumber"
+                        :image="Logo" myclass="w-40" :dots-options="{
+            type: 'extra - rounded',
+            color: ticket.qrCodeColor,
+        }" :corners-square-options="{
+            type: 'extra - rounded',
+            color: ticket.qrCodeColor,
+        }" :corners-dot-options="{
+            type: 'extra - rounded',
+            color: ticket.qrCodeColor,
+        }" />
                 </div>
             </div>
         </div>
         <div class="row py-3 justify-content-center">
-            <div
-                class="col-8 bg-white p-4 border rounded-3 noto-serif-tc lh-lg"
-            >
+            <div class="col-8 bg-white p-4 border rounded-3 noto-serif-tc lh-lg">
                 <p class="fs-7 fw-bold border-bottom pb-3 mb-3">活動詳情</p>
                 <p>地址：{{ event.address }}</p>
                 <p>最小成團人數：{{ event.minParticipants }}</p>
                 <p>最大成團人數：{{ event.maxParticipants }}</p>
-                <div
-                    v-if="event && event.idNumber"
-                    class="d-flex align-items-center justify-content-end"
-                >
-                    <router-link
-                        class="btn btn-outline-primary d-flex align-items-center"
-                        :to="{
-                            name: 'SingleEvent',
-                            params: {
-                                eventId: event.idNumber,
-                            },
-                        }"
-                    >
+                <div v-if="event && event.idNumber" class="d-flex align-items-center justify-content-end">
+                    <router-link class="btn btn-outline-primary d-flex align-items-center" :to="{
+            name: 'SingleEvent',
+            params: {
+                eventId: event.idNumber,
+            },
+        }">
                         <span class="material-symbols-outlined fs-9 pe-1">
-                            double_arrow </span
-                        >查看活動詳情</router-link
-                    >
+                            double_arrow </span>查看活動詳情</router-link>
                 </div>
             </div>
         </div>
         <div class="row py-3 justify-content-center">
-            <div
-                class="col-8 bg-white p-4 border rounded-3 noto-serif-tc lh-lg"
-            >
+            <div class="col-8 bg-white p-4 border rounded-3 noto-serif-tc lh-lg">
                 <p class="fs-7 fw-bold border-bottom pb-3 mb-3">店家資料</p>
                 <div class="ticket-page-store_wrap">
                     <div class="d-flex mt-4 align-items-center gap-3">
                         <div class="img-wrap round">
-                            <img
-                                referrerpolicy="no-referrer"
-                                class="w-100"
-                                :src="store.avatar"
-                                :alt="store.name"
-                            />
+                            <img referrerpolicy="no-referrer" class="w-100" :src="store.avatar" :alt="store.name" />
                         </div>
                         <div class="">
                             <h3 class="fs-7 fw-bold mb-3">
@@ -135,24 +101,17 @@
                             </p>
                         </div>
                     </div>
-                    <div
-                        class="d-flex align-items-center justify-content-end pt-2"
-                    >
-                        <router-link
-                            v-if="store && store._id"
-                            class="btn btn-outline-primary"
-                            :to="{
-                                name: 'StoreIntroduction',
-                                params: {
-                                    userId: store._id,
-                                },
-                            }"
-                        >
+                    <div class="d-flex align-items-center justify-content-end pt-2">
+                        <router-link v-if="store && store._id" class="btn btn-outline-primary" :to="{
+            name: 'StoreIntroduction',
+            params: {
+                userId: store._id,
+            },
+        }">
                             <span class="material-symbols-outlined fe-1 fs-9">
                                 double_arrow
                             </span>
-                            查看店家詳情</router-link
-                        >
+                            查看店家詳情</router-link>
                     </div>
                 </div>
             </div>
