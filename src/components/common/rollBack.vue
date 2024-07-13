@@ -1,6 +1,6 @@
 <template>
     <router-link
-        class="btn btn-outline-primary float-end"
+        class="btn btn-outline-primary"
         :to="{
             name: routeLink.name,
             params: routeLink.params,

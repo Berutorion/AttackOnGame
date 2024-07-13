@@ -11,18 +11,29 @@
                     <div
                         class="d-flex justify-content-between align-items-center pb-3 border-bottom"
                     >
-                        <p class="fs-7 fw-bold">
+                        <p class="fs-7 fw-bold line-clamp line-clamp-1">
                             {{ order.title }}
                         </p>
-                        <router-link
-                            :to="{ name: 'ScannerTicket', params: idNumber }"
-                            class="btn btn-primary text-white fw-bold px-4 signup-button d-flex justify-content-between"
-                        >
-                            <span class="material-symbols-outlined">
-                                qr_code_scanner
-                            </span>
-                            <p class="mx-1">驗證票券</p>
-                        </router-link>
+                        <div class="d-flex flex-shrink-0">
+                            <router-link
+                                :to="{
+                                    name: 'ScannerTicket',
+                                    params: idNumber,
+                                }"
+                                class="mx-1 btn btn-outline-primary fw-bold px-4 signup-button d-flex justify-content-between"
+                            >
+                                <span class="material-symbols-outlined">
+                                    qr_code_scanner
+                                </span>
+                                <p class="mx-1">驗證票券</p>
+                            </router-link>
+                            <rollBack
+                                :route-link="{
+                                    name: 'StoreActivity',
+                                    params: idNumber,
+                                }"
+                            ></rollBack>
+                        </div>
                     </div>
                     <div class="py-2 d-flex gap-4 border-bottom">
                         <div>
@@ -119,7 +130,7 @@
                                 :href="`tel:${user.phoneValue}`"
                             >
                                 <span
-                                    class="cursor material-symbols-outlined text-grey33"
+                                    class="lh-2 cursor material-symbols-outlined text-grey33"
                                 >
                                     phone_iphone
                                 </span>
@@ -127,7 +138,7 @@
                             <div v-if="user.notes">
                                 <span
                                     v-tooltip="user.notes"
-                                    class="cursor material-symbols-outlined text-grey33"
+                                    class="lh-2 cursor material-symbols-outlined text-grey33"
                                 >
                                     note_stack
                                 </span>
@@ -151,6 +162,7 @@ import Loading from '@/components/common/Loading.vue';
 import useAlert from '@/stores/alert';
 import { vTooltip } from 'floating-vue';
 import 'floating-vue/dist/style.css';
+import rollBack from '@/components/common/rollBack.vue';
 
 const alterStore = useAlert();
 const users = ref([]);
@@ -219,7 +231,7 @@ body {
     overflow: hidden;
     background-color: #fff;
 
-    &.ss {
+    &.small-profile-img {
         width: 2rem;
         height: 2rem;
     }

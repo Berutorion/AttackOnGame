@@ -97,11 +97,24 @@ const StoreAPI = {
             throw error;
         }
     },
+    async validateQrCode(idNumber, data) {
+        try {
+            const response = await Axios.post(
+                `/api/v1/myevent/${idNumber}/validate-qr-code`,
+                data
+            );
+            return response;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
     async getTheTickets(idNumber) {
         try {
             const response = await Axios.get(
                 `/api/v1/myevent/${idNumber}/qr-code`
             );
+            console.log('response', response);
             return response;
         } catch (error) {
             console.error(error);

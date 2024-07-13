@@ -54,21 +54,6 @@
                     </div>
                     <div class="mb-3">
                         <h3 class="fs-6 fw-bold mt-3">喜歡的桌遊類型</h3>
-                        <label for="avatar" class="form-label">上傳頭像</label>
-                        <input
-                            id="avatar"
-                            type="file"
-                            class="form-control"
-                            name="avatar"
-                            @change="handleFileUpload"
-                        />
-                        <error-message
-                            name="avatar"
-                            class="text-danger"
-                        ></error-message>
-                    </div>
-                    <div class="mb-3">
-                        <h3 class="fs-6 fw-bold mt-3">喜歡的桌遊類型</h3>
                         <div class="form-check">
                             <input
                                 id="favorite"
