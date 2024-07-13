@@ -8,10 +8,9 @@
             @camera-on="onCameraReady"
             @camera-off="onCameraOff"
         >
-            <div v-show="showScanConfirmation" class="scan-confirmation">
-                <p>aaa</p>
-            </div>
+            <div v-show="showScanConfirmation" class="scan-confirmation"></div>
         </qrcode-stream>
+
         <div v-if="usedQrcodes" class="decoded-result">
             <div
                 v-for="used in usedQrcodes"
@@ -34,26 +33,35 @@
                 <p>{{ error }}</p>
             </div>
         </div>
+        <div v-if="loading" class="text-center mt-4">
+            <div class="spinner-border" role="status"></div>
+        </div>
     </div>
 </template>
 
 <script setup>
 import { QrcodeStream } from 'vue-qrcode-reader';
 import { ref, onMounted, defineProps, defineEmits } from 'vue';
+import StoreAPI from '@/api/Store';
 
+const loading = ref(false);
 const emit = defineEmits(['getTickets']);
 const camera = ref('user');
 const selectedBarcodeFormats = ref(['qr_code']);
 const showScanConfirmation = ref(false);
 const usedQrcodes = ref([]);
 const errorQrcodes = ref([]);
-const { codes } = defineProps({
+const props = defineProps({
     codes: {
         type: Array,
         default: () => [],
     },
+    idNumber: {
+        type: String,
+        default: '',
+    },
 });
-console.log(codes);
+console.log(props.codes);
 function paintBoundingBox(detectedCodes, ctx) {
     detectedCodes.forEach((detectedCode) => {
         const {
@@ -70,10 +78,23 @@ function validateTicketFormat(ticket) {
     return regex.test(ticket);
 }
 function validateTicketAccess(ticket) {
-    console.log(codes);
-    return codes.includes(ticket);
+    console.log(props.codes);
+    return props.codes.includes(ticket);
 }
-function onDetect(detection) {
+
+async function Scanning() {
+    loading.value = true;
+    await StoreAPI.validateQrCode(props.idNumber, {
+        tickets: usedQrcodes.value,
+    })
+        .then(() => {
+            emit('getTickets');
+        })
+        .finally(() => {
+            loading.value = false;
+        });
+}
+async function onDetect(detection) {
     usedQrcodes.value = [];
     detection.forEach((e) => {
         console.log(e.rawValue);
@@ -82,15 +103,15 @@ function onDetect(detection) {
             validateTicketAccess(e.rawValue)
         ) {
             if (!usedQrcodes.value.includes(e.rawValue)) {
+                console.log('sdd', e.rawValue);
                 usedQrcodes.value.push(e.rawValue);
             }
         } else if (!errorQrcodes.value.includes(e.rawValue)) {
             errorQrcodes.value.push(e.rawValue);
         }
     });
-    emit('getTickets');
+    Scanning();
 }
-
 function onCameraReady() {
     showScanConfirmation.value = false;
 }

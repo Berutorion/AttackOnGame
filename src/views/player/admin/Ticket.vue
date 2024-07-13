@@ -181,8 +181,8 @@ const rawOrder = ref({});
 const rawtickets = ref([]);
 
 const TICKET_COLOR_MAP = {
-    pending: '#212529',
-    completed: '#9F9F9F',
+    尚未使用: '#212529',
+    已核銷: '#9F9F9F',
 };
 
 const getTicket = async (idNumber) => {

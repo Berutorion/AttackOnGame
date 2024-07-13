@@ -21,17 +21,19 @@
                             <QrCode
                                 class="camera-view"
                                 :codes="codeList"
+                                :id-number="idNumber"
                                 @getTickets="getTickets()"
                             ></QrCode>
                         </div>
                     </div>
                     <div
                         class="d-grid pb-2 pt-3 gap-2 text-grey9F border-bottom"
-                        style="grid-template-columns: 2fr 1fr 2fr"
+                        style="grid-template-columns: 2fr 1fr 2fr 2fr"
                     >
                         <p>報名者</p>
                         <p>報到狀態</p>
                         <p>票券編號</p>
+                        <p>報到時間</p>
                     </div>
                     <div v-if="tickets.length === 0">
                         <EmptyField text="還沒有人下訂單唷"></EmptyField>
@@ -41,7 +43,7 @@
                             v-for="user in ticketsAttr"
                             :key="user.idNumber"
                             class="d-grid gap-2 py-2 border-bottom"
-                            style="grid-template-columns: 2fr 1fr 2fr"
+                            style="grid-template-columns: 2fr 1fr 2fr 2fr"
                         >
                             <div class="d-flex align-items-center">
                                 <div
@@ -55,6 +57,7 @@
                             </div>
                             <p>{{ user.status }}</p>
                             <p>{{ user.idNumber }}</p>
+                            <p>{{ user.qrCodeUsedTime }}</p>
                         </div>
                     </div>
                 </div>
@@ -140,6 +143,7 @@ const ticketsAttr = computed(() => {
         idNumber: x.idNumber,
         status: TICKET_STATUS_MAP[x.qrCodeStatus],
         isActive: '',
+        qrCodeUsedTime: x.qrCodeUsedTime,
     }));
 });
 const codeList = computed(() => {
