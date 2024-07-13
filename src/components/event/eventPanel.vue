@@ -1,18 +1,13 @@
 <template>
     <div class="row">
-        <EventCard
-            v-for="event in data"
-            :key="event.idNumber"
-            :data="event"
-            :keywords="keywords"
-            @click="onEventCardClick(event.idNumber)"
-        ></EventCard>
+        <EventCard v-for="event in data" :key="event.idNumber" :data="event" :keywords="keywords"
+            @click="onEventCardClick(event.idNumber)"></EventCard>
     </div>
 </template>
 <script setup>
 import { defineProps } from 'vue';
 import { useRouter } from 'vue-router';
-import EventCard from './EventCard.vue';
+import EventCard from './eventCard.vue';
 
 const { data } = defineProps({
     data: {
