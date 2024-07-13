@@ -89,7 +89,7 @@ import { useRoute } from 'vue-router';
 import EventAPI from '@/api/Event';
 import StoreAPI from '@/api/Store';
 import { selectStoreData } from '@/stores/selectStore';
-import EventPanel from '@/components/event/EventPanel.vue';
+import EventPanel from '@/components/event/eventPanel.vue';
 import Loading from '@/components/common/Loading.vue';
 import storeRatingList from '@/components/store/storeRatingList.vue';
 
