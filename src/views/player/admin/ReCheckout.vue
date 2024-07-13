@@ -67,7 +67,7 @@
                             style="width: 80px"
                             class="d-inline-block text-black"
                             >備註</span
-                        >{{ formData.note }}
+                        >{{ formData.notes }}
                     </p>
                     <hr />
                     <p class="text-danger">
