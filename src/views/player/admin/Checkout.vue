@@ -1,5 +1,9 @@
 <template>
     <div class="container">
+        <Loading
+            v-if="isLoading"
+            :class="{ 'loading-fade': !isLoading }"
+        ></Loading>
         <div class="row py-3 justify-content-center player-admin-checkout">
             <div
                 class="col-8 bg-white p-3 border rounded-3 noto-serif-tc lh-lg"
@@ -236,7 +240,9 @@ import { useFormStore } from '@/stores/order';
 import modal from '@/components/common/simpleModal.vue';
 import toLocalString from '@/utilities/toLocalString';
 import useAlert from '@/stores/alert';
+import Loading from '@/components/common/Loading.vue';
 
+const isLoading = ref(true);
 const orderStore = useFormStore();
 const router = useRouter();
 const alterStore = useAlert();
@@ -299,6 +305,11 @@ const postOrder = async (formdata) => {
                     `${err.response.data.message || err?.code || 'Oh~'}`
                 );
             }
+        })
+        .finally(() => {
+            setTimeout(() => {
+                isLoading.value = false;
+            }, 500);
         });
 };
 
@@ -317,6 +328,7 @@ const onSubmitSuccess = () => {
         email: formData.value.email,
         notes: formData.value.notes,
     };
+    isLoading.value = true;
     postOrder(postOrderObj);
 };
 const onSubmit = onSubmitSuccess;
@@ -324,6 +336,7 @@ const getSummary = async (eventid) => {
     await PlayerAPI.getSummary(eventid)
         .then((res) => {
             console.log(res);
+
             summaryData.value = res.data.data;
             formData.value.title = summaryData.value.title;
             formData.value.address = summaryData.value.address;
@@ -335,6 +348,11 @@ const getSummary = async (eventid) => {
         })
         .catch((err) => {
             console.log(err);
+        })
+        .finally(() => {
+            setTimeout(() => {
+                isLoading.value = false;
+            }, 500);
         });
 };
 const indexStore = useIndexStore();
