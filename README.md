@@ -2,7 +2,7 @@
 
 <img width="400" src="https://imgur.com/rs7cEYF.png" />
 
-- 首頁： [AttackOnGame](https://attack-on-game.vercel.app/#/)
+- 首頁： [AttackOnGame](https://attack-on-game-six.vercel.app/#/)
 
 AttackOnGame 聚人 是一個提供一個【桌遊活動銷售】的平台，桌遊店家上架活動，販售票券供玩家選擇，而對於玩家端的角色來說，可以使其在平台上面【付費】參加桌遊團體。廣義的說這是一種店家號召（揪團），玩家依照自由意願選擇是否參加，並藉由【第三方金流】購買相關活動票券。
 
