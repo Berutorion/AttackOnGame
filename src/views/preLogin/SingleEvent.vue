@@ -330,11 +330,11 @@
                         </div>
                         <div class="d-flex mt-4 mb-4 align-items-center">
                             <span
-                                class="fz-6 material-symbols-outlined text-greyD4 mr-2"
+                                class="fz-6 material-symbols-outlined text-grey33 mr-2"
                             >
                                 location_on
                             </span>
-                            <p>{{ eventData.address }}</p>
+                            <p class="text-grey33">{{ eventData.address }}</p>
                         </div>
                         <Location :location-data="locationData"></Location>
                     </div>
@@ -342,55 +342,59 @@
                 <div class="col-4 position-sticky top-0">
                     <div class="event-header mb-4">
                         <div
-                            class="fw-bold py-1 px-2 d-inline-block"
+                            class="fw-bold py-1 px-2 d-inline-block text-grey33"
                             :class="eventPrograss.bgcColor"
                         >
                             {{ eventPrograss.text }}
                         </div>
-                        <h3 class="fz-6 fw-bold my-2">{{ eventData.title }}</h3>
+                        <h3 class="fz-6 fw-bold my-2 lh-base text-grey33">
+                            {{ eventData.title }}
+                        </h3>
                         <div class="d-flex mb-2 align-items-center">
                             <span
-                                class="fz-6 material-symbols-outlined text-greyD4 mr-2"
+                                class="fz-6 material-symbols-outlined text-grey33 mr-2"
                             >
                                 location_on
                             </span>
-                            <p class="">{{ eventData.address }}</p>
+                            <p class="text-grey33">{{ eventData.address }}</p>
                         </div>
                         <div class="shape bg-greyE9">
                             <p class="">報名進度條</p>
                         </div>
                         <div class=""></div>
                     </div>
-                    <div class="event-info">
+                    <div class="event-info shadow">
                         <div
                             class="event-info__card border border-grey66 p-3 pt-0 rounded-2 bg-white"
                         >
                             <!-- TODO: 補上 icon -->
                             <p
-                                class="bg-greyE9 fw-bold pt-1 pb-2 px-2 mb-2 d-inline-block rounded-bottom-2"
+                                class="bg-greyE9 fw-bold pt-1 pb-2 px-3 mb-2 d-inline-block rounded-bottom-2"
                             >
                                 活動模式
                             </p>
 
                             <div class="d-flex mb-2 align-items-center">
                                 <span
-                                    class="material-symbols-outlined icon-48 text-greyD4 mr-2"
+                                    class="material-symbols-outlined icon-48 text-primary mr-2"
                                 >
                                     paid
                                 </span>
                                 <div>
-                                    <h3 class="fz-6 fw-bold mb-1 text-primary">
+                                    <h3
+                                        class="fz-6 fw-bold mb-1 text-primary text-grey33"
+                                    >
                                         {{
                                             toLocalString(
                                                 eventData.participationFee
                                             )
                                         }}
                                         NT
-                                        <span class="fz-4 text-dark"
+                                        <span class="fz-4 text-grey33"
                                             >/ 活動費用</span
                                         >
                                     </h3>
-                                    <p>
+                                    <p class="text-grey66">
                                         參與活動所需的費用，可能包含場地、材料等各種成本。
                                     </p>
                                 </div>
@@ -405,14 +409,16 @@
                                     fastfood
                                 </span>
                                 <div>
-                                    <h3 class="fz-6 text-primary fw-bold mb-1">
+                                    <h3
+                                        class="fz-6 text-primary fw-bold mb-1 text-grey33"
+                                    >
                                         {{
                                             eventData.isFoodAllowed
                                                 ? '可'
                                                 : '不可'
                                         }}<span class="text-dark">帶外食</span>
                                     </h3>
-                                    <p>
+                                    <p class="text-grey66">
                                         關於參與者是否可以攜帶外部食物到活動場地的規定。
                                     </p>
                                 </div>
@@ -425,11 +431,13 @@
                                     person_remove
                                 </span>
                                 <div>
-                                    <h3 class="fz-6 fw-bold mb-1">
+                                    <h3 class="fz-6 fw-bold mb-1 text-grey33">
                                         最低人數
                                         {{ eventData.minParticipants || 0 }} 人
                                     </h3>
-                                    <p>確保活動能順利進行的最小參與者數量。</p>
+                                    <p class="text-grey66">
+                                        確保活動能順利進行的最小參與者數量。
+                                    </p>
                                 </div>
                             </div>
 
@@ -440,17 +448,32 @@
                                     person_add
                                 </span>
                                 <div>
-                                    <h3 class="fz-6 fw-bold mb-1">
+                                    <h3 class="fz-6 fw-bold mb-1 text-grey33">
                                         最高人數
                                         {{ eventData.maxParticipants || 0 }} 人
                                     </h3>
-                                    <p>
+                                    <p class="text-grey66">
                                         為了保證活動質量和參與者體驗，設定的最大參與者數量。
                                     </p>
                                 </div>
                             </div>
 
-                            <div class="d-flex mb-2"></div>
+                            <div class="d-flex mb-2 align-items-center">
+                                <span
+                                    class="material-symbols-outlined icon-48 text-greyD4 mr-2"
+                                >
+                                    date_range
+                                </span>
+                                <div>
+                                    <h3 class="fz-6 fw-bold mb-1 text-grey33">
+                                        {{ eventData.eventEndTime }}
+                                    </h3>
+                                    <p class="text-grey66">
+                                        活動日期，請準時出席，逾時不候。
+                                    </p>
+                                </div>
+                            </div>
+
                             <div class="d-flex mb-2"></div>
 
                             <button
@@ -466,13 +489,20 @@
                                 我要報名
                             </button>
 
-                            <div class="d-flex mt-2 align-items-center">
+                            <div class="d-flex mt-2 align-items-start">
                                 <span
-                                    class="material-symbols-outlined fz-6 text-greyD4 mr-2"
+                                    class="material-symbols-outlined fz-6 mr-2 mt-1 text-grey33"
                                 >
                                     date_range
                                 </span>
-                                <p>截止時間： {{ eventData.eventEndTime }}</p>
+                                <div>
+                                    <p class="text-grey66">報名時間：</p>
+                                    <p class="text-grey66 mt-1">
+                                        {{ eventData.registrationStartTime }}
+                                        <span class="px-2">~</span>
+                                        {{ eventData.registrationEndTime }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -514,7 +544,7 @@ const getEvent = async (eventId) => {
             eventData.value = response.data.data.event;
             storeData.value = response.data.data.store;
             locationData.value = response.data.data.event.location;
-            console.log('storeData', response);
+            console.log('event', response);
         })
         .catch((err) => {
             console.log(err);
@@ -659,7 +689,6 @@ onMounted(() => {
     .shape {
         padding-left: 8px;
         width: 120px;
-        height: 1.5rem;
         clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
     }
 
