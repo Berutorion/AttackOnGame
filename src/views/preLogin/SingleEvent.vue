@@ -1,32 +1,49 @@
 <template>
     <div class="single-event container-fluid positon-relative lh-lg">
         <modal ref="BsModal" title="很抱歉" :text="ModalText"></modal>
-        <Loading v-if="isLoading" :class="{ 'loading-fade': !isLoading }"></Loading>
+        <Loading
+            v-if="isLoading"
+            :class="{ 'loading-fade': !isLoading }"
+        ></Loading>
         <div class="container py-4">
             <div class="row">
                 <div class="col-8">
                     <div class="event-image mb-4 rounded-2">
-                        <img ref="image" referrerpolicy="no-referrer" class="w-100 inset-0 object-fit-cover rounded-2"
-                            :src="eventData.eventImageUrl" :alt="eventData.title" />
+                        <img
+                            ref="image"
+                            referrerpolicy="no-referrer"
+                            class="w-100 inset-0 object-fit-cover rounded-2"
+                            :src="eventData.eventImageUrl"
+                            :alt="eventData.title"
+                        />
                     </div>
                     <div class="event-description mb-4">
                         <div class="sub-title_wrap">
                             <h2
-                                class="text-primary fw-bold pb-2 border-bottom border-2 border-primary fz-6 d-inline-block sub-title mb-0">
+                                class="text-primary fw-bold pb-2 border-bottom border-2 border-primary fz-6 d-inline-block sub-title mb-0"
+                            >
                                 詳細內容
                             </h2>
                         </div>
                         <p class="mt-4">{{ eventData.description }}</p>
                     </div>
                     <div class="event-store">
-                        <div class="event-store-card bg-greyF7 border-1 border border-grey rounded-2 p-4">
-                            <p class="fw-bold pb-2 border-bottom border-2 border-greyD3">
+                        <div
+                            class="event-store-card bg-greyF7 border-1 border border-grey rounded-2 p-4"
+                        >
+                            <p
+                                class="fw-bold pb-2 border-bottom border-2 border-greyD3"
+                            >
                                 店家資料
                             </p>
                             <div class="d-flex mt-4 align-items-center">
                                 <div class="img-wrap round">
-                                    <img referrerpolicy="no-referrer" class="w-100" :src="storeData.avatar"
-                                        :alt="storeData.name" />
+                                    <img
+                                        referrerpolicy="no-referrer"
+                                        class="w-100"
+                                        :src="storeData.avatar"
+                                        :alt="storeData.name"
+                                    />
                                 </div>
                                 <div class="">
                                     <h3 class="fz-6 fw-bold">
@@ -35,16 +52,25 @@
                                     <p class="line-clamp line-clamp-3">
                                         {{ storeData.introduce }}
                                     </p>
-                                    <div class="d-flex align-items-center justify-content-end">
-                                        <span class="material-symbols-outlined text-primary">
+                                    <div
+                                        class="d-flex align-items-center justify-content-end"
+                                    >
+                                        <span
+                                            class="material-symbols-outlined text-primary"
+                                        >
                                             double_arrow
                                         </span>
-                                        <router-link v-if="storeData && storeData._id" class="link text-primary" :to="{
-            name: 'StoreIntroduction',
-            params: {
-                userId: storeData._id,
-            },
-        }">查看詳情</router-link>
+                                        <router-link
+                                            v-if="storeData && storeData._id"
+                                            class="link text-primary"
+                                            :to="{
+                                                name: 'StoreIntroduction',
+                                                params: {
+                                                    userId: storeData._id,
+                                                },
+                                            }"
+                                            >查看詳情</router-link
+                                        >
                                     </div>
                                 </div>
                             </div>
@@ -53,72 +79,124 @@
                     <div class="event-message mt-4">
                         <div class="sub-title_wrap mb-3">
                             <h2
-                                class="text-primary fw-bold pb-2 border-bottom border-2 border-primary fz-6 d-inline-block sub-title mb-0">
+                                class="text-primary fw-bold pb-2 border-bottom border-2 border-primary fz-6 d-inline-block sub-title mb-0"
+                            >
                                 活動答擬區
                             </h2>
                         </div>
 
                         <div>
                             <div class="p-3 bg-white border rounded">
-                                <div v-if="!isLogin"
-                                    class="bg-greyF7 p-3 border rounded mb-3 d-flex justify-content-center align-items-center">
-                                    <span class="material-symbols-outlined text-grey9F">
+                                <div
+                                    v-if="!isLogin"
+                                    class="bg-greyF7 p-3 border rounded mb-3 d-flex justify-content-center align-items-center"
+                                >
+                                    <span
+                                        class="material-symbols-outlined text-grey9F"
+                                    >
                                         sms
                                     </span>
-                                    <router-link :to="{ name: 'Login' }" class="text-primary btn">登入會員後</router-link>
+                                    <router-link
+                                        :to="{ name: 'Login' }"
+                                        class="text-primary btn"
+                                        >登入會員後</router-link
+                                    >
                                     <p>後，即可留下你的意見！</p>
                                 </div>
-                                <div v-if="messageData?.length === 0" class="bg-greyF7 p-3 border rounded mb-3">
+                                <div
+                                    v-if="messageData?.length === 0"
+                                    class="bg-greyF7 p-3 border rounded mb-3"
+                                >
                                     <p class="text-center">尚未有人留言</p>
                                 </div>
-                                <div v-if="isLogin && !isShopper" class="bg-greyF7 p-3 border rounded mb-3">
+                                <div
+                                    v-if="isLogin && !isShopper"
+                                    class="bg-greyF7 p-3 border rounded mb-3"
+                                >
                                     <div class="d-flex flex-column">
-                                        <div style="
+                                        <div
+                                            style="
                                                 width: 40px;
                                                 height: 40px;
                                                 overflow: hidden;
-                                            " class="rounded-circle mb-2">
-                                            <img style="object-fit: cover" class="w-100 h-100" :src="PlayerData.avatar"
-                                                alt="" />
+                                            "
+                                            class="rounded-circle mb-2"
+                                        >
+                                            <img
+                                                style="object-fit: cover"
+                                                class="w-100 h-100"
+                                                :src="PlayerData.avatar"
+                                                alt=""
+                                            />
                                         </div>
-                                        <textarea id="question" v-model="myMessageContent.content" name="question"
-                                            class="form-control bg-white" cols="30" rows="3"
-                                            placeholder="請輸入留言"></textarea>
-                                        <button class="btn btn-primary mt-2 align-self-end" :disabled="myMessageContent.content === ''
-            " @click="
-            postMyMessageContent(
-                eventData.idNumber,
-                {
-                    content:
-                        myMessageContent.content,
-                }
-            )
-            ">
+                                        <textarea
+                                            id="question"
+                                            v-model="myMessageContent.content"
+                                            name="question"
+                                            class="form-control bg-white"
+                                            cols="30"
+                                            rows="3"
+                                            placeholder="請輸入留言"
+                                        ></textarea>
+                                        <button
+                                            class="btn btn-primary mt-2 align-self-end"
+                                            :disabled="
+                                                myMessageContent.content === ''
+                                            "
+                                            @click="
+                                                postMyMessageContent(
+                                                    eventData.idNumber,
+                                                    {
+                                                        content:
+                                                            myMessageContent.content,
+                                                    }
+                                                )
+                                            "
+                                        >
                                             送出留言
                                         </button>
                                     </div>
                                 </div>
                                 <div v-if="messageData?.length > 0">
-                                    <div v-for="(mes, index) in result" :key="mes._id" class="px-3 border-bottom mb-3">
+                                    <div
+                                        v-for="(mes, index) in result"
+                                        :key="mes._id"
+                                        class="px-3 border-bottom mb-3"
+                                    >
                                         <div class="mb-3">
-                                            <div class="d-flex gap-3 align-items-center justify-content-between">
-                                                <div class="d-flex gap-3 align-items-center">
-                                                    <div style="
+                                            <div
+                                                class="d-flex gap-3 align-items-center justify-content-between"
+                                            >
+                                                <div
+                                                    class="d-flex gap-3 align-items-center"
+                                                >
+                                                    <div
+                                                        style="
                                                             width: 40px;
                                                             height: 40px;
                                                             overflow: hidden;
-                                                        " class="rounded-circle mb-2">
-                                                        <img style="
+                                                        "
+                                                        class="rounded-circle mb-2"
+                                                    >
+                                                        <img
+                                                            style="
                                                                 object-fit: cover;
-                                                            " class="w-100 h-100" :src="mes?.comment
-                .avatar
-            " alt="" />
+                                                            "
+                                                            class="w-100 h-100"
+                                                            :src="
+                                                                mes?.comment
+                                                                    .avatar
+                                                            "
+                                                            alt=""
+                                                        />
                                                     </div>
-                                                    <p class="text-primary fw-bold">
+                                                    <p
+                                                        class="text-primary fw-bold"
+                                                    >
                                                         {{
-            mes?.comment
-                .authorName
-        }}
+                                                            mes?.comment
+                                                                .authorName
+                                                        }}
                                                     </p>
                                                 </div>
                                                 <p class="text-grey9F fs-9">
@@ -128,31 +206,58 @@
                                             <p>
                                                 {{ mes?.comment.content }}
                                             </p>
-                                            <button v-if="isLogin &&
-            isLoginUser ===
-            storeData.user
-            " type="button" class="btn btn-outline-dark"
-                                                @click="toggleReplyBox(index)">
+                                            <button
+                                                v-if="
+                                                    isLogin &&
+                                                    isLoginUser ===
+                                                        storeData.user
+                                                "
+                                                type="button"
+                                                class="btn btn-outline-dark"
+                                                @click="toggleReplyBox(index)"
+                                            >
                                                 回覆
                                             </button>
                                         </div>
-                                        <div v-for="reply in mes?.replies" :key="reply._id" class="mb-3">
-                                            <div class="d-flex gap-3 align-items-center justify-content-between">
-                                                <div class="d-flex gap-3 align-items-center">
-                                                    <div style="
+                                        <div
+                                            v-for="reply in mes?.replies"
+                                            :key="reply._id"
+                                            class="mb-3"
+                                        >
+                                            <div
+                                                class="d-flex gap-3 align-items-center justify-content-between"
+                                            >
+                                                <div
+                                                    class="d-flex gap-3 align-items-center"
+                                                >
+                                                    <div
+                                                        style="
                                                             width: 40px;
                                                             height: 40px;
                                                             overflow: hidden;
-                                                        " class="rounded-circle mb-2">
-                                                        <img style="
+                                                        "
+                                                        class="rounded-circle mb-2"
+                                                    >
+                                                        <img
+                                                            style="
                                                                 object-fit: cover;
-                                                            " class="w-100 h-100" :src="storeData.avatar
-            " alt="" />
+                                                            "
+                                                            class="w-100 h-100"
+                                                            :src="
+                                                                storeData.avatar
+                                                            "
+                                                            alt=""
+                                                        />
                                                     </div>
-                                                    <p class="text-primary fw-bold">
+                                                    <p
+                                                        class="text-primary fw-bold"
+                                                    >
                                                         {{ reply?.authorName }}
                                                     </p>
-                                                    <span class="bg-warning px-2 rounded fs-10">團主</span>
+                                                    <span
+                                                        class="bg-warning px-2 rounded fs-10"
+                                                        >團主</span
+                                                    >
                                                 </div>
                                                 <p class="text-grey9F fs-9">
                                                     {{ reply?.createdAt }}
@@ -160,30 +265,52 @@
                                             </div>
                                             <p>{{ reply?.content }}</p>
                                         </div>
-                                        <div v-if="isLogin &&
-            isLoginUser ===
-            storeData.user &&
-            isReplyBoxOpen === index
-            ">
-                                            <textarea id="question" v-model="myMessageContent.content
-            " name="question" class="form-control bg-white" cols="30" rows="3"
-                                                placeholder="請輸入回覆"></textarea>
-                                            <div class="d-flex justify-content-end align-items-center py-2 gap-2">
-                                                <button type=" button" class="btn btn-outline-dark">
+                                        <div
+                                            v-if="
+                                                isLogin &&
+                                                isLoginUser ===
+                                                    storeData.user &&
+                                                isReplyBoxOpen === index
+                                            "
+                                        >
+                                            <textarea
+                                                id="question"
+                                                v-model="
+                                                    myMessageContent.content
+                                                "
+                                                name="question"
+                                                class="form-control bg-white"
+                                                cols="30"
+                                                rows="3"
+                                                placeholder="請輸入回覆"
+                                            ></textarea>
+                                            <div
+                                                class="d-flex justify-content-end align-items-center py-2 gap-2"
+                                            >
+                                                <button
+                                                    type=" button"
+                                                    class="btn btn-outline-dark"
+                                                >
                                                     取消
                                                 </button>
-                                                <button type="button" class="btn btn-primary" :disabled="myMessageContent.content ===
-            ''
-            " @click="
-            checkMyReply(
-                eventData.idNumber,
-                mes.comment._id,
-                {
-                    content:
-                        myMessageContent.content,
-                }
-            )
-            ">
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-primary"
+                                                    :disabled="
+                                                        myMessageContent.content ===
+                                                        ''
+                                                    "
+                                                    @click="
+                                                        checkMyReply(
+                                                            eventData.idNumber,
+                                                            mes.comment._id,
+                                                            {
+                                                                content:
+                                                                    myMessageContent.content,
+                                                            }
+                                                        )
+                                                    "
+                                                >
                                                     回覆留言
                                                 </button>
                                             </div>
@@ -196,12 +323,15 @@
                     <div class="event-description mt-4">
                         <div class="sub-title_wrap">
                             <h2
-                                class="text-primary fw-bold pb-2 border-bottom border-2 border-primary fz-6 d-inline-block sub-title mb-0">
+                                class="text-primary fw-bold pb-2 border-bottom border-2 border-primary fz-6 d-inline-block sub-title mb-0"
+                            >
                                 地理位置
                             </h2>
                         </div>
                         <div class="d-flex mt-4 mb-4 align-items-center">
-                            <span class="fz-6 material-symbols-outlined text-grey33 mr-2">
+                            <span
+                                class="fz-6 material-symbols-outlined text-grey33 mr-2"
+                            >
                                 location_on
                             </span>
                             <p class="text-grey33">{{ eventData.address }}</p>
@@ -211,14 +341,19 @@
                 </div>
                 <div class="col-4 position-sticky top-0">
                     <div class="event-header mb-4">
-                        <div class="fw-bold py-1 px-2 d-inline-block text-grey33" :class="eventPrograss.bgcColor">
+                        <div
+                            class="fw-bold py-1 px-2 d-inline-block text-grey33"
+                            :class="eventPrograss.bgcColor"
+                        >
                             {{ eventPrograss.text }}
                         </div>
                         <h3 class="fz-6 fw-bold my-2 lh-base text-grey33">
                             {{ eventData.title }}
                         </h3>
                         <div class="d-flex mb-2 align-items-center">
-                            <span class="fz-6 material-symbols-outlined text-grey33 mr-2">
+                            <span
+                                class="fz-6 material-symbols-outlined text-grey33 mr-2"
+                            >
                                 location_on
                             </span>
                             <p class="text-grey33">{{ eventData.address }}</p>
@@ -229,25 +364,35 @@
                         <div class=""></div>
                     </div>
                     <div class="event-info shadow">
-                        <div class="event-info__card border border-grey66 p-3 pt-0 rounded-2 bg-white">
+                        <div
+                            class="event-info__card border border-grey66 p-3 pt-0 rounded-2 bg-white"
+                        >
                             <!-- TODO: 補上 icon -->
-                            <p class="bg-greyE9 fw-bold pt-1 pb-2 px-3 mb-2 d-inline-block rounded-bottom-2">
+                            <p
+                                class="bg-greyE9 fw-bold pt-1 pb-2 px-3 mb-2 d-inline-block rounded-bottom-2"
+                            >
                                 活動模式
                             </p>
 
                             <div class="d-flex mb-2 align-items-center">
-                                <span class="material-symbols-outlined icon-48 text-primary mr-2">
+                                <span
+                                    class="material-symbols-outlined icon-48 text-primary mr-2"
+                                >
                                     paid
                                 </span>
                                 <div>
-                                    <h3 class="fz-6 fw-bold mb-1 text-primary text-grey33">
+                                    <h3
+                                        class="fz-6 fw-bold mb-1 text-primary text-grey33"
+                                    >
                                         {{
-            toLocalString(
-                eventData.participationFee
-            )
-        }}
+                                            toLocalString(
+                                                eventData.participationFee
+                                            )
+                                        }}
                                         NT
-                                        <span class="fz-4 text-grey33">/ 活動費用</span>
+                                        <span class="fz-4 text-grey33"
+                                            >/ 活動費用</span
+                                        >
                                     </h3>
                                     <p class="text-grey66">
                                         參與活動所需的費用，可能包含場地、材料等各種成本。
@@ -258,16 +403,20 @@
                             <hr class="bg-greyE9" />
 
                             <div class="d-flex mb-2 align-items-center">
-                                <span class="material-symbols-outlined icon-48 text-greyD4 mr-2">
+                                <span
+                                    class="material-symbols-outlined icon-48 text-greyD4 mr-2"
+                                >
                                     fastfood
                                 </span>
                                 <div>
-                                    <h3 class="fz-6 text-primary fw-bold mb-1 text-grey33">
+                                    <h3
+                                        class="fz-6 text-primary fw-bold mb-1 text-grey33"
+                                    >
                                         {{
-                eventData.isFoodAllowed
-                    ? '可'
-                    : '不可'
-            }}<span class="text-dark">帶外食</span>
+                                            eventData.isFoodAllowed
+                                                ? '可'
+                                                : '不可'
+                                        }}<span class="text-dark">帶外食</span>
                                     </h3>
                                     <p class="text-grey66">
                                         關於參與者是否可以攜帶外部食物到活動場地的規定。
@@ -276,7 +425,9 @@
                             </div>
 
                             <div class="d-flex mb-2 align-items-center">
-                                <span class="material-symbols-outlined icon-48 text-greyD4 mr-2">
+                                <span
+                                    class="material-symbols-outlined icon-48 text-greyD4 mr-2"
+                                >
                                     person_remove
                                 </span>
                                 <div>
@@ -291,7 +442,9 @@
                             </div>
 
                             <div class="d-flex mb-2 align-items-center">
-                                <span class="material-symbols-outlined icon-48 text-greyD4 mr-2">
+                                <span
+                                    class="material-symbols-outlined icon-48 text-greyD4 mr-2"
+                                >
                                     person_add
                                 </span>
                                 <div>
@@ -306,7 +459,9 @@
                             </div>
 
                             <div class="d-flex mb-2 align-items-center">
-                                <span class="material-symbols-outlined icon-48 text-greyD4 mr-2">
+                                <span
+                                    class="material-symbols-outlined icon-48 text-greyD4 mr-2"
+                                >
                                     date_range
                                 </span>
                                 <div>
@@ -321,16 +476,23 @@
 
                             <div class="d-flex mb-2"></div>
 
-                            <button :disabled="isEventClosed ||
-            isEventUnregiistable ||
-            isShopper
-            " class="btn btn-primary w-100" :data-test="eventData.idNumber"
-                                @click="goCheckout(eventData.idNumber)">
+                            <button
+                                :disabled="
+                                    isEventClosed ||
+                                    isEventUnregiistable ||
+                                    isShopper
+                                "
+                                class="btn btn-primary w-100"
+                                :data-test="eventData.idNumber"
+                                @click="goCheckout(eventData.idNumber)"
+                            >
                                 我要報名
                             </button>
 
                             <div class="d-flex mt-2 align-items-start">
-                                <span class="material-symbols-outlined fz-6 mr-2 mt-1 text-grey33">
+                                <span
+                                    class="material-symbols-outlined fz-6 mr-2 mt-1 text-grey33"
+                                >
                                     date_range
                                 </span>
                                 <div>
@@ -463,7 +625,7 @@ const getMessage = async (eventId) => {
             doForEach(messageData.value);
             console.log('messageData.value', messageData.value);
         })
-        .catch(() => { });
+        .catch(() => {});
 };
 const myMessageContent = ref({
     content: '',

@@ -1,8 +1,13 @@
 <template>
     <div class="container">
-        <Loading v-if="isLoading" :class="{ 'loading-fade': !isLoading }"></Loading>
+        <Loading
+            v-if="isLoading"
+            :class="{ 'loading-fade': !isLoading }"
+        ></Loading>
         <div class="row py-3 justify-content-center player-admin-checkout">
-            <div class="col-8 bg-white p-3 border rounded-3 noto-serif-tc lh-lg">
+            <div
+                class="col-8 bg-white p-3 border rounded-3 noto-serif-tc lh-lg"
+            >
                 <div class="col-11 mx-auto py-4">
                     <h2 class="fw-bold pb-5 title">確認活動資訊</h2>
                     <h3 class="fw-bold sub-title mb-2">
@@ -31,8 +36,8 @@
                         </span>
                         <p class="text-grey66 fw-bold ps-1">
                             {{
-            toLocalString(summaryData?.participationFee)
-        }}/人
+                                toLocalString(summaryData?.participationFee)
+                            }}/人
                         </p>
                     </div>
                 </div>
@@ -40,87 +45,181 @@
                     <div class="d-flex justify-content-between align-items-end">
                         <h4 class="fw-bold pb-3">核對報名資訊</h4>
                         <div>
-                            <input id="isDefaultData" v-model="isDefaultChecked" type="checkbox"
-                                @change="handleCheckboxChange" />
-                            <label for="isDefaultData" class="form-label ps-1">帶入預設會員資料</label>
+                            <input
+                                id="isDefaultData"
+                                v-model="isDefaultChecked"
+                                type="checkbox"
+                                @change="handleCheckboxChange"
+                            />
+                            <label for="isDefaultData" class="form-label ps-1"
+                                >帶入預設會員資料</label
+                            >
                         </div>
                     </div>
                     <v-form v-slot="{ errors }" @submit="onSubmit">
                         <div class="mb-3 require-icon">
-                            <label for="InputName" class="form-label">姓名</label>
-                            <v-field id="InputName" v-model="formData.userName" type="text" class="form-control"
-                                aria-describedby="userNameHelp" rules="required" name="姓名"
-                                :class="{ 'is-invalid': errors['姓名'] }"></v-field>
-                            <error-message name="姓名" class="text-danger"></error-message>
+                            <label for="InputName" class="form-label"
+                                >姓名</label
+                            >
+                            <v-field
+                                id="InputName"
+                                v-model="formData.userName"
+                                type="text"
+                                class="form-control"
+                                aria-describedby="userNameHelp"
+                                rules="required"
+                                name="姓名"
+                                :class="{ 'is-invalid': errors['姓名'] }"
+                            ></v-field>
+                            <error-message
+                                name="姓名"
+                                class="text-danger"
+                            ></error-message>
                         </div>
                         <div class="mb-3 require-icon">
-                            <label for="InputPhone" class="form-label">聯絡電話</label>
-                            <v-field id="InputPhone" v-model="formData.phoneNum" type="text" class="form-control"
-                                rules="required|min:8|regex:^\d+$" name="聯絡電話"
-                                :class="{ 'is-invalid': errors['聯絡電話'] }"></v-field>
-                            <error-message name="聯絡電話" class="text-danger"></error-message>
+                            <label for="InputPhone" class="form-label"
+                                >聯絡電話</label
+                            >
+                            <v-field
+                                id="InputPhone"
+                                v-model="formData.phoneNum"
+                                type="text"
+                                class="form-control"
+                                rules="required|min:8|regex:^\d+$"
+                                name="聯絡電話"
+                                :class="{ 'is-invalid': errors['聯絡電話'] }"
+                            ></v-field>
+                            <error-message
+                                name="聯絡電話"
+                                class="text-danger"
+                            ></error-message>
                         </div>
                         <div class="mb-3 require-icon">
-                            <label for="InputEmail" class="form-label">電子郵件</label>
-                            <v-field id="InputEmail" v-model="formData.email" type="text" class="form-control"
-                                rules="required|email" name="電子郵件" :class="{ 'is-invalid': errors['電子郵件'] }"></v-field>
-                            <error-message name="電子郵件" class="text-danger"></error-message>
+                            <label for="InputEmail" class="form-label"
+                                >電子郵件</label
+                            >
+                            <v-field
+                                id="InputEmail"
+                                v-model="formData.email"
+                                type="text"
+                                class="form-control"
+                                rules="required|email"
+                                name="電子郵件"
+                                :class="{ 'is-invalid': errors['電子郵件'] }"
+                            ></v-field>
+                            <error-message
+                                name="電子郵件"
+                                class="text-danger"
+                            ></error-message>
                         </div>
                         <div class="mb-3 require-icon">
-                            <label for="personNum" class="form-label">報名人數
-                                <span class="text-grey66">(至多{{
-            summaryData?.availableSeat
-        }}人)</span></label>
-                            <v-field id="personNum" v-model="formData.personNum" type="number" class="form-control"
-                                rules="required|regex:^(0*[1-9][0-9]*)$" name="報名人數" :max="summaryData?.maxParticipants"
-                                :class="{ 'is-invalid': errors['報名人數'] }"></v-field>
-                            <error-message name="報名人數" class="text-danger"></error-message>
+                            <label for="personNum" class="form-label"
+                                >報名人數
+                                <span class="text-grey66"
+                                    >(至多{{
+                                        summaryData?.availableSeat
+                                    }}人)</span
+                                ></label
+                            >
+                            <v-field
+                                id="personNum"
+                                v-model="formData.personNum"
+                                type="number"
+                                class="form-control"
+                                rules="required|regex:^(0*[1-9][0-9]*)$"
+                                name="報名人數"
+                                :max="summaryData?.maxParticipants"
+                                :class="{ 'is-invalid': errors['報名人數'] }"
+                            ></v-field>
+                            <error-message
+                                name="報名人數"
+                                class="text-danger"
+                            ></error-message>
                         </div>
                         <div class="mb-3">
-                            <label for="inputRemark" class="form-label">備註</label>
-                            <textarea id="inputRemark" v-model="formData.notes" type="text" class="form-control"
-                                placeholder="有什麼想跟主揪說的話嗎？歡迎留言唷" rows="5" name="備註"></textarea>
+                            <label for="inputRemark" class="form-label"
+                                >備註</label
+                            >
+                            <textarea
+                                id="inputRemark"
+                                v-model="formData.notes"
+                                type="text"
+                                class="form-control"
+                                placeholder="有什麼想跟主揪說的話嗎？歡迎留言唷"
+                                rows="5"
+                                name="備註"
+                            ></textarea>
                         </div>
                         <div class="mb-3 pt-3">
                             <p>付款金額</p>
                             <p>
                                 {{
-            toLocalString(
-                formData.personNum *
-                summaryData?.participationFee
-            )
-        }}元
+                                    toLocalString(
+                                        formData.personNum *
+                                            summaryData?.participationFee
+                                    )
+                                }}元
                             </p>
                         </div>
-                        <div class="py-4 justify-content-center d-flex flex-column">
+                        <div
+                            class="py-4 justify-content-center d-flex flex-column"
+                        >
                             <h4 class="fw-bold pb-3">了解活動政策</h4>
                             <p class="text-grey66 fw-bold">
                                 請註明您已經閱讀並同意活動政策
                             </p>
                             <div class="d-flex align-items-center require-icon">
-                                <label for="isAgree" class="d-flex align-items-center">
-                                    <v-field id="isAgree" class="form-check-input mt-0 me-2" type="checkbox"
-                                        value="請註明您已經閱讀並同意" aria-label="Checkbox for following text input"
-                                        rules="required" name="同意活動政策" :class="{
-                'is-invalid':
-                    errors['同意活動政策'],
-            }"></v-field>
+                                <label
+                                    for="isAgree"
+                                    class="d-flex align-items-center"
+                                >
+                                    <v-field
+                                        id="isAgree"
+                                        class="form-check-input mt-0 me-2"
+                                        type="checkbox"
+                                        value="請註明您已經閱讀並同意"
+                                        aria-label="Checkbox for following text input"
+                                        rules="required"
+                                        name="同意活動政策"
+                                        :class="{
+                                            'is-invalid':
+                                                errors['同意活動政策'],
+                                        }"
+                                    ></v-field>
 
                                     <p>我同意</p>
                                 </label>
 
-                                <button class="btn p-0 text-primary" @click="openModal">
+                                <button
+                                    class="btn p-0 text-primary"
+                                    @click="openModal"
+                                >
                                     活動政策
                                 </button>
-                                <modal ref="BsModal" title="活動政策" :text="ContentText"></modal>
+                                <modal
+                                    ref="BsModal"
+                                    title="活動政策"
+                                    :text="ContentText"
+                                ></modal>
                             </div>
-                            <error-message name="同意活動政策" class="text-danger"></error-message>
-                            <div class="py-4 gap-2 mt-5 justify-content-center d-flex align-items-center">
-                                <RollBack v-if="theEventId" :route-link="{
-            name: 'SingleEvent',
-            params: { eventId: theEventId },
-        }"></RollBack>
-                                <button type="submit" class="btn btn-primary fw-bold px-4">
+                            <error-message
+                                name="同意活動政策"
+                                class="text-danger"
+                            ></error-message>
+                            <div
+                                class="py-4 gap-2 mt-5 justify-content-center d-flex align-items-center"
+                            >
+                                <RollBack
+                                    v-if="theEventId"
+                                    :route-link="{
+                                        name: 'SingleEvent',
+                                        params: { eventId: theEventId },
+                                    }"
+                                ></RollBack>
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary fw-bold px-4"
+                                >
                                     確認報名，前往結帳
                                 </button>
                             </div>
