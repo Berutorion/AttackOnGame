@@ -38,20 +38,12 @@
                             class="text-danger"
                         ></error-message>
                     </div>
+                    <!--  
                     <div class="mb-3">
                         <label for="avatar" class="form-label">上傳頭像</label>
-                        <input
-                            id="avatar"
-                            type="file"
-                            class="form-control"
-                            name="avatar"
-                            @change="handleFileUpload"
-                        />
-                        <error-message
-                            name="avatar"
-                            class="text-danger"
-                        ></error-message>
-                    </div>
+                        <input id="avatar" type="file" class="form-control" name="avatar" @change="handleFileUpload" />
+                        <error-message name="avatar" class="text-danger"></error-message>
+                    </div>-->
                     <div class="mb-3">
                         <h3 class="fs-6 fw-bold mt-3">喜歡的桌遊類型</h3>
                         <div class="form-check">
@@ -103,39 +95,40 @@
 <script setup>
 import UserAccess from '@/components/UserAccess.vue';
 import PlayerAPI from '@/api/Player';
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import useIndexStore from '@/stores/index';
-import ImageAPI from '@/api/Image';
+// import useIndexStore from '@/stores/index';
+// import ImageAPI from '@/api/Image';
 
-const indexStore = useIndexStore();
-const userData = computed(() => indexStore.userData);
+// const indexStore = useIndexStore();
+// const userData = computed(() => indexStore.userData);
 const router = useRouter();
 const userForm = ref({
     name: '',
     phone: '',
-    avatar: '',
+    avatar: 'https://storage.googleapis.com/attackongame-13004.appspot.com/player/66933af37d3c7a31eb33ce3a.jpg?GoogleAccessId=firebase-adminsdk-onftv%40attackongame-13004.iam.gserviceaccount.com&Expires=16756646400&Signature=P2KKzs05tTErHYNKONq%2F99fke%2BcsPo46tLLT75ZXtCSXs53wkPiJGvGYvV8w%2FNk1B13UUCUsWW4S1b%2F7pG8ijBgYJtdz9G27Wf8F4eegGdWGUzsCw2D8renGwBoI4baFGZH2ar8yS4LDQIpu8QOpFmHp9%2FHaFt%2FhIDFXbku2SVqHYXRrs0lXUe1CpvxJjh3rzvv%2BAENVAssBc718qWpr0XPqlc8a%2FkXNipCeau8B7eXWv4hRH4lSPc5Rzhp6EtjHoFLNSiDX2Sy7EE9%2FIChkIo%2FT0uvQbJdOjtBSFYWLyuxvgYQlkA1Vtz3VnapKKiWhoQLEErrDI5w7YoEAsUgI1Q%3D%3D',
     preferGame: [],
 });
 
-const postImage = async (userId, file) => {
-    await ImageAPI.postPlayerImg(userId, file)
-        .then((res) => {
-            userForm.value.avatar = res.data.imgURL;
-            console.log('res.imgURL', res.data.imgURL);
-            // window.location.reload();
-        })
-        .catch((err) => {
-            console.log('imageErr', err);
-        });
-};
+// const postImage = async (userId, file) => {
+//     await ImageAPI.postPlayerImg(userId, file)
+//         .then((res) => {
+//             userForm.value.avatar = res.data.imgURL;
+//             console.log('res.imgURL', res.data.imgURL);
+//             // window.location.reload();
+//         })
+//         .catch((err) => {
+//             console.log('imageErr', err);
+//         });
+// };
 
-const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    userForm.value.avatar = file;
-    postImage(userData.value.id, userForm.value.avatar);
-};
+// const handleFileUpload = (event) => {
+//     const file = event.target.files[0];
+//     userForm.value.avatar = file;
+//     postImage(userData.value.id, userForm.value.avatar);
+// };
 const postUserForm = async (userFormData) => {
+    console.log('userFormData', userFormData);
     if (
         userForm.value.name === '' ||
         userForm.value.phone === '' ||
