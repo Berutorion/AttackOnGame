@@ -83,7 +83,13 @@
                             </p>
                         </div>
                     </div>
-                    <div
+                    <n-data-table
+                        :columns="columns"
+                        :data="usersAttr"
+                        empty="還沒有人下訂單唷"
+                        class="border-bottom"
+                    />
+                    <!-- <div
                         class="d-grid pb-2 pt-3 gap-2 text-grey9F border-bottom"
                         style="
                             grid-template-columns: 2fr 1fr 1fr 1fr 1fr 2fr 1fr;
@@ -144,7 +150,7 @@
                                 </span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -163,6 +169,7 @@ import useAlert from '@/stores/alert';
 import { vTooltip } from 'floating-vue';
 import 'floating-vue/dist/style.css';
 import rollBack from '@/components/common/rollBack.vue';
+import { NDataTable } from 'naive-ui';
 
 const alterStore = useAlert();
 const users = ref([]);
@@ -213,6 +220,50 @@ onMounted(() => {
     const { idNumber } = route.params;
     getOrder(idNumber);
 });
+const columns=[
+        {
+          title: '報名者',
+          key: 'name',
+          render(row) {
+            return (
+              <div class="d-flex align-items-center">
+                <div class="profile-img rounded-circle small-profile-img mx-1">
+                  <img :src="row.imgUrl" alt="" />
+                </div>
+                <p class="line-clamp-1 line-clamp">{{ row.name }}</p>
+              </div>
+            )
+          }
+        },
+        {
+          title: '總額',
+          key: 'payment'
+        },
+        {
+          title: '數量',
+          key: 'registrationCount'
+        },
+        {
+          title: '付款方式',
+          key: 'paymentMethod'
+        },
+        {
+          title: '付款狀態',
+          key: 'paymentStatus'
+        },
+        {
+          title: '訂單編號',
+          key: 'idNumber'
+        },
+        {
+          title: '操作',
+          key: 'actions',
+          render(row) {
+            return (
+              < class=              </            )
+          }
+        }
+      ]
 </script>
 <style lang="scss" scoped>
 body {
