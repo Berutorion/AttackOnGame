@@ -10,7 +10,7 @@
             <div
                 class="position-absolute inset-0 d-flex justify-content-center align-items-center flex-column px-4 pb-4 noto-serif-tc gap-2 w-100"
             >
-                <img
+                <!-- <img
                     referrerpolicy="no-referrer"
                     width="50%"
                     height="23%"
@@ -19,17 +19,34 @@
                     :alt="data.name"
                     loading="lazy"
                     @error="handleErrorImage()"
+                /> -->
+                <n-avatar
+                    color="ffffff"
+                    round
+                    lazy
+                    :src="storeImg"
+                    :alt="data.name"
+                    loading="lazy"
+                    :fallback-src="storeDefaultIcon"
+                    :render-placeholder="() => null"
                 />
                 <div
                     v-if="isLazyLoad"
                     class="swiper-lazy-preloader swiper-lazy-preloader-black"
                 ></div>
-                <p
+                <n-ellipsis
+                    class="fw-bold fs-8 line-clamp line-clamp-1"
+                    line-clamp="1"
+                    :tooltip="true"
+                >
+                    {{ data.name }}
+                </n-ellipsis>
+                <!-- <p
                     class="fw-bold fs-8 line-clamp line-clamp-1"
                     style="height: 27px; overflow: hidden"
                 >
                     {{ data.name }}
-                </p>
+                </p> -->
                 <div class="d-flex align-items-center noto-serif-tc gap-1">
                     <span class="material-symbols-outlined fs-8">
                         location_on
@@ -65,9 +82,9 @@ const storeImg = computed(() => {
     if (_isEmpty(data.avatar)) return storeDefaultIcon;
     return data.avatar;
 });
-function handleErrorImage(e) {
-    e.src = storeDefaultIcon;
-}
+// function handleErrorImage(e) {
+//     e.src = storeDefaultIcon;
+// }
 </script>
 <style lang="scss" scoped>
 .card-title-h {

@@ -163,10 +163,10 @@ import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import toLocalString from '@/utilities/toLocalString';
 import { PaymentStatus, PaymentMethod } from '@/constant/orderStatus';
-import EmptyField from '@/components/common/EmptyField.vue';
+// import EmptyField from '@/components/common/EmptyField.vue';
 import Loading from '@/components/common/Loading.vue';
 import useAlert from '@/stores/alert';
-import { vTooltip } from 'floating-vue';
+// import { vTooltip } from 'floating-vue';
 import 'floating-vue/dist/style.css';
 import rollBack from '@/components/common/rollBack.vue';
 import { NDataTable } from 'naive-ui';
@@ -220,50 +220,50 @@ onMounted(() => {
     const { idNumber } = route.params;
     getOrder(idNumber);
 });
-const columns=[
-        {
-          title: '報名者',
-          key: 'name',
-          render(row) {
-            return (
-              <div class="d-flex align-items-center">
-                <div class="profile-img rounded-circle small-profile-img mx-1">
-                  <img :src="row.imgUrl" alt="" />
-                </div>
-                <p class="line-clamp-1 line-clamp">{{ row.name }}</p>
-              </div>
-            )
-          }
-        },
-        {
-          title: '總額',
-          key: 'payment'
-        },
-        {
-          title: '數量',
-          key: 'registrationCount'
-        },
-        {
-          title: '付款方式',
-          key: 'paymentMethod'
-        },
-        {
-          title: '付款狀態',
-          key: 'paymentStatus'
-        },
-        {
-          title: '訂單編號',
-          key: 'idNumber'
-        },
-        {
-          title: '操作',
-          key: 'actions',
-          render(row) {
-            return (
-              < class=              </            )
-          }
-        }
-      ]
+// const columns=[
+//         {
+//           title: '報名者',
+//           key: 'name',
+//           render(row) {
+//             return (
+//               <div class="d-flex align-items-center">
+//                 <div class="profile-img rounded-circle small-profile-img mx-1">
+//                   <img :src="row.imgUrl" alt="" />
+//                 </div>
+//                 <p class="line-clamp-1 line-clamp">{{ row.name }}</p>
+//               </div>
+//             )
+//           }
+//         },
+//         {
+//           title: '總額',
+//           key: 'payment'
+//         },
+//         {
+//           title: '數量',
+//           key: 'registrationCount'
+//         },
+//         {
+//           title: '付款方式',
+//           key: 'paymentMethod'
+//         },
+//         {
+//           title: '付款狀態',
+//           key: 'paymentStatus'
+//         },
+//         {
+//           title: '訂單編號',
+//           key: 'idNumber'
+//         },
+//         {
+//           title: '操作',
+//           key: 'actions',
+//           render(row) {
+//             return (
+//               < class=              </            )
+//           }
+//         }
+//       ]
 </script>
 <style lang="scss" scoped>
 body {

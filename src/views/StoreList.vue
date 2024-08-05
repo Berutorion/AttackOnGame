@@ -14,14 +14,30 @@
                         <option value="searchEvent">尋找活動</option>
                         <option selected value="searchStore">尋找店家</option>
                     </select>
-                    <input
+                    <!-- <input
                         id="validationCustom01"
                         v-model="inputValue"
                         type="text"
                         class="form-control py-2"
                         required=""
                         placeholder="輸入關鍵字"
-                    />
+                    /> -->
+                    <n-input
+                        id="validationCustom01"
+                        v-model="inputValue"
+                        n-input
+                        round
+                        placeholder="輸入關鍵字"
+                        type="text"
+                        class="form-control"
+                        clearable
+                    >
+                        <template #suffix>
+                            <span class="material-symbols-outlined">
+                                search
+                            </span>
+                        </template>
+                    </n-input>
                 </div>
             </div>
             <div class="row">

@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
-
+import naive from 'naive-ui';
 // 匯入 vee-validate 多國語系的功能
 import { localize, setLocale } from '@vee-validate/i18n';
 // 匯入 vee-validate 繁體中文語系檔案
@@ -38,6 +38,7 @@ app.component('VForm', Form);
 app.component('VField', Field);
 app.component('ErrorMessage', ErrorMessage);
 
+app.use(naive);
 app.use(router);
 app.use(pinia);
 app.mount('#app');
